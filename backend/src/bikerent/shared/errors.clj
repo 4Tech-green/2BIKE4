@@ -18,5 +18,8 @@
 (defn error-type [e]
   (::type (ex-data e)))
 
-(defn body [code message]
-  {:error {:code (name code) :message message}})
+(defn body
+  ([code message] {:error {:code (name code) :message message}})
+  ([code message details]
+   (cond-> (body code message)
+     details (assoc-in [:error :details] details))))

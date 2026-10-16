@@ -1,8 +1,12 @@
 (ns bikerent.http
   "Rotas Reitit, middlewares e servidor Jetty."
-  (:require [bikerent.shared.errors :as errors]
+  (:require [bikerent.http.auth :as auth]
+            [bikerent.http.listings :as listings]
+            [bikerent.http.users :as users]
+            [bikerent.shared.errors :as errors]
             [clojure.tools.logging :as log]
             [integrant.core :as ig]
+            [malli.error :as me]
             [muuntaja.core :as m]
             [next.jdbc :as jdbc]
             [reitit.coercion.malli :as malli-coercion]
@@ -15,8 +19,12 @@
   (:import (java.sql SQLException)
            (org.eclipse.jetty.server Server)))
 
-(defn- error-response [status code message]
-  {:status status :body (errors/body code message)})
+(defn- error-response
+  ([status code message] {:status status :body (errors/body code message)})
+  ([status code message details] {:status status :body (errors/body code message details)}))
+
+(defn- detalhes-validacao [data]
+  (try (me/humanize data) (catch Exception _ nil)))
 
 (defn wrap-errors
   "Converte exceções no formato único de erro da API."
@@ -33,7 +41,7 @@
             (error-response (errors/http-status type) type (ex-message e))
 
             (= ex-type :reitit.coercion/request-coercion)
-            (error-response 400 :bad-request "Dados inválidos")
+            (error-response 400 :bad-request "Dados inválidos" (detalhes-validacao (ex-data e)))
 
             (= ex-type :muuntaja/decode)
             (error-response 400 :bad-request "JSON inválido")
@@ -41,6 +49,9 @@
             ;; restrição EXCLUDE ou triggers de sobreposição de datas
             (= sqlstate "23P01")
             (error-response 409 :conflict "As datas escolhidas não estão disponíveis")
+
+            (= sqlstate "23505")
+            (error-response 409 :conflict "Registro duplicado")
 
             :else
             (do (log/error e "Erro não tratado em" (:request-method req) (:uri req))
@@ -58,11 +69,13 @@
     (let [ok (:ok (jdbc/execute-one! datasource ["select 1 as ok"]))]
       {:status 200 :body {:status "ok" :db (= 1 ok)}})))
 
-(defn routes [{:keys [datasource]}]
-  ["/api/v1"
-   ["/health" {:get {:handler (health datasource)}}]])
+(defn routes [{:keys [datasource] :as deps}]
+  (into ["/api/v1"
+         ["/health" {:get {:handler (health datasource)}}]]
+        (concat (users/routes deps)
+                (listings/routes deps))))
 
-(defn handler [deps]
+(defn handler [{:keys [jwt-secret] :as deps}]
   (-> (ring/ring-handler
        (ring/router
         (routes deps)
@@ -72,6 +85,8 @@
                              muuntaja/format-negotiate-middleware
                              muuntaja/format-response-middleware
                              wrap-errors
+                             [auth/identity-middleware jwt-secret]
+                             auth/require-login-middleware
                              muuntaja/format-request-middleware
                              coercion/coerce-response-middleware
                              coercion/coerce-request-middleware]}})

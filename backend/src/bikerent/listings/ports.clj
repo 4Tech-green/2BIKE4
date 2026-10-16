@@ -1,0 +1,12 @@
+(ns bikerent.listings.ports)
+
+(defprotocol ListingRepository
+  (create! [repo listing] "Insere o anúncio e devolve o id.")
+  (update! [repo id changes])
+  (find-by-id [repo id] "Anúncio com dono, fotos, bloqueios e períodos reservados, ou nil.")
+  (search [repo filtros] "Anúncios publicados que atendem aos filtros (cidade, tipo, preço, período).")
+  (list-by-owner [repo owner-id])
+  (add-photo! [repo listing-id url])
+  (remove-photo! [repo listing-id photo-id] "true se a foto existia.")
+  (add-block! [repo listing-id periodo] "Bloqueia datas e devolve o id do bloqueio.")
+  (remove-block! [repo listing-id block-id] "true se o bloqueio existia."))
