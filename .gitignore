@@ -1,0 +1,10 @@
+.cpcache/
+.nrepl-port
+.clj-kondo/.cache/
+.lsp/.cache/
+.calva/
+target/
+node_modules/
+.env
+.idea/
+*.iml

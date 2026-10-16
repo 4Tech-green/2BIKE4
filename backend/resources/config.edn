@@ -1,0 +1,9 @@
+;; Configuração do sistema Integrant, lida com Aero (#env, #or, #long).
+{:bikerent.db/datasource {:url       #env DATABASE_URL
+                          :pool-size 5
+                          :migrate?  true}
+
+ :bikerent.http/handler  {:datasource #ig/ref :bikerent.db/datasource}
+
+ :bikerent.http/server   {:handler #ig/ref :bikerent.http/handler
+                          :port    #long #or [#env PORT 3000]}}
