@@ -1,0 +1,15 @@
+;; npm run dev  → http://localhost:8280 (API em http://localhost:3000)
+;; API_URL=https://... npm run build  → aponta para a API publicada
+{:source-paths ["src"]
+
+ :dependencies [[reagent "1.2.0"]
+                [re-frame "1.4.3"]
+                [metosin/reitit-frontend "0.7.2"]]
+
+ :dev-http {8280 "public"}
+
+ :builds {:app {:target          :browser
+                :output-dir      "public/js"
+                :asset-path      "js"
+                :modules         {:main {:init-fn bikerent-ui.core/init}}
+                :closure-defines {bikerent-ui.config/API_URL #shadow/env ["API_URL" :default "http://localhost:3000/api/v1"]}}}}
