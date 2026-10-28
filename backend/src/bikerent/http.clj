@@ -1,6 +1,7 @@
 (ns bikerent.http
   "Rotas Reitit, middlewares e servidor Jetty."
   (:require [bikerent.http.auth :as auth]
+            [bikerent.http.bookings :as bookings]
             [bikerent.http.listings :as listings]
             [bikerent.http.users :as users]
             [bikerent.shared.errors :as errors]
@@ -73,7 +74,8 @@
   (into ["/api/v1"
          ["/health" {:get {:handler (health datasource)}}]]
         (concat (users/routes deps)
-                (listings/routes deps))))
+                (listings/routes deps)
+                (bookings/routes deps))))
 
 (defn handler [{:keys [jwt-secret] :as deps}]
   (-> (ring/ring-handler

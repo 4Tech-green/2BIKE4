@@ -3,12 +3,23 @@
                                                   :pool-size 5
                                                   :migrate?  true}
 
+ :bikerent.shared.events/publisher               {}
+ :bikerent.payments.adapters.fake/gateway        {}
+
  :bikerent.users.adapters.postgres/repository    {:datasource #ig/ref :bikerent.db/datasource}
  :bikerent.listings.adapters.postgres/repository {:datasource #ig/ref :bikerent.db/datasource}
+ :bikerent.bookings.adapters.postgres/repository {:datasource #ig/ref :bikerent.db/datasource}
+ :bikerent.payments.adapters.postgres/repository {:datasource #ig/ref :bikerent.db/datasource}
+ :bikerent.reviews.adapters.postgres/repository  {:datasource #ig/ref :bikerent.db/datasource}
 
  :bikerent.http/handler                          {:datasource #ig/ref :bikerent.db/datasource
                                                   :users      #ig/ref :bikerent.users.adapters.postgres/repository
                                                   :listings   #ig/ref :bikerent.listings.adapters.postgres/repository
+                                                  :bookings   #ig/ref :bikerent.bookings.adapters.postgres/repository
+                                                  :payments   #ig/ref :bikerent.payments.adapters.postgres/repository
+                                                  :reviews    #ig/ref :bikerent.reviews.adapters.postgres/repository
+                                                  :gateway    #ig/ref :bikerent.payments.adapters.fake/gateway
+                                                  :events     #ig/ref :bikerent.shared.events/publisher
                                                   :jwt-secret #or [#env JWT_SECRET "dev-secret-troque-no-deploy"]}
 
  :bikerent.http/server                           {:handler #ig/ref :bikerent.http/handler
