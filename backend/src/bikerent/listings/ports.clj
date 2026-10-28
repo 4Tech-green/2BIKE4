@@ -9,4 +9,7 @@
   (add-photo! [repo listing-id url])
   (remove-photo! [repo listing-id photo-id] "true se a foto existia.")
   (add-block! [repo listing-id periodo] "Bloqueia datas e devolve o id do bloqueio.")
-  (remove-block! [repo listing-id block-id] "true se o bloqueio existia."))
+  (remove-block! [repo listing-id block-id] "true se o bloqueio existia.")
+  (save-embedding! [repo listing-id vetor])
+  (ids-without-embedding [repo] "Ids dos anúncios ainda sem vetor (ex.: criados pelo seed).")
+  (search-similar [repo vetor limite] "Anúncios publicados mais próximos do vetor, com :similaridade de 0 a 1."))

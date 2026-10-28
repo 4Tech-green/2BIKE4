@@ -1,9 +1,10 @@
 (ns bikerent.listings.logic
-  "Casos de uso de anúncios. `deps` traz {:listings ListingRepository};
+  "Casos de uso de anúncios. `deps` traz {:listings ListingRepository :events EventPublisher};
   `user` é a identidade do token: {:id :papel}."
   (:require [bikerent.listings.domain :as domain]
             [bikerent.listings.ports :as ports]
             [bikerent.shared.errors :as errors]
+            [bikerent.shared.events :as events]
             [bikerent.shared.time :as time]))
 
 (defn get-listing [{:keys [listings]} id]
@@ -25,12 +26,16 @@
 (defn mine [{:keys [listings]} user]
   (ports/list-by-owner listings (:id user)))
 
-(defn create! [{:keys [listings] :as deps} user input]
-  (get-listing deps (ports/create! listings (assoc input :owner_id (:id user)))))
+(defn create! [{:keys [listings events] :as deps} user input]
+  (let [id (ports/create! listings (assoc input :owner_id (:id user)))]
+    (events/publish! events :listing-published {:listing_id id})
+    (get-listing deps id)))
 
-(defn update! [{:keys [listings] :as deps} user id changes]
+(defn update! [{:keys [listings events] :as deps} user id changes]
   (get-editable deps id user)
   (ports/update! listings id changes)
+  ;; o texto pode ter mudado: o indexador gera o vetor de novo
+  (events/publish! events :listing-published {:listing_id id})
   (get-listing deps id))
 
 (defn add-photo! [{:keys [listings] :as deps} user id url]
