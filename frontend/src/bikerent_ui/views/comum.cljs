@@ -29,6 +29,11 @@
         dois #(.padStart (str %) 2 "0")]
     (str (.getFullYear d) "-" (dois (inc (.getMonth d))) "-" (dois (.getDate d)))))
 
+(defn data<=
+  "Compara datas AAAA-MM-DD (a ordem do texto é a ordem das datas)."
+  [& datas]
+  (every? (fn [[a b]] (not (pos? (compare a b)))) (partition 2 1 datas)))
+
 (defn diarias
   "Datas inclusivas, como na API: de 10 a 12 são 3 diárias."
   [inicio fim]
@@ -186,19 +191,24 @@
       texto]]))
 
 (def ^:private itens-menu
-  [[:inicio "Início" "⌂"] [:busca "Buscar" "⌕"] [:reservas "Reservas" "▦"] [:perfil "Perfil" "◉"]])
+  ;; [rota texto ícone rotas-que-acendem-o-item]
+  [[:inicio "Início" "⌂" #{:inicio}]
+   [:busca "Buscar" "⌕" #{:busca :bike}]
+   [:reservas "Reservas" "▦" #{:reservas :reserva :pagar :avaliar}]
+   [:meus-anuncios "Minhas bikes" "🚲" #{:meus-anuncios :novo-anuncio :editar-anuncio :pedidos :ganhos}]
+   [:perfil "Perfil" "◉" #{:perfil}]])
 
 (defn barra-navegacao
   "Barra de navegação inferior (celular)."
   [atual]
   [:nav {:class "fixed inset-x-0 bottom-0 z-[1000] border-t border-borda bg-superficie md:hidden"}
    [:ul {:class "mx-auto flex max-w-screen-sm justify-around pb-safe"}
-    (for [[nome texto icone] itens-menu]
+    (for [[nome texto icone ativo] itens-menu]
       ^{:key nome}
       [:li
        [:a {:href  (rfe/href nome)
-            :class (str "flex flex-col items-center px-3 py-2 text-xs "
-                        (if (= nome atual) "font-semibold text-primaria" "text-suave"))}
+            :class (str "flex flex-col items-center px-2 py-2 text-xs "
+                        (if (ativo atual) "font-semibold text-primaria" "text-suave"))}
         [:span.text-xl icone] texto]])]])
 
 (defn cabecalho
@@ -208,8 +218,8 @@
    [:div {:class "mx-auto flex max-w-5xl items-center justify-between px-4 py-3"}
     [:a {:href (rfe/href :inicio) :class "text-xl font-extrabold tracking-tight"} "2Bike4"]
     [:nav {:class "hidden gap-6 md:flex"}
-     (for [[nome texto] itens-menu]
+     (for [[nome texto _ ativo] itens-menu]
        ^{:key nome}
        [:a {:href  (rfe/href nome)
-            :class (if (= nome atual) "font-semibold" "text-suave hover:text-texto")}
+            :class (if (ativo atual) "font-semibold" "text-suave hover:text-texto")}
         texto])]]])

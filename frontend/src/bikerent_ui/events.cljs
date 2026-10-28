@@ -1,5 +1,6 @@
 (ns bikerent-ui.events
-  (:require [re-frame.core :as rf]
+  (:require [bikerent-ui.config :as config]
+            [re-frame.core :as rf]
             [reitit.frontend.easy :as rfe]))
 
 (def ^:private chave-sessao "bikerent/sessao")
@@ -204,6 +205,117 @@
    {:navegar    [:reserva {:id (:id reserva)}]
     :fx         [[:dispatch [:carregar :minhas-reservas {:path "/bookings/mine"}]]
                  [:dispatch [:avisar :sucesso mensagem]]]}))
+
+;; ---------------------------------------------------------------- proprietário
+
+(defn- recarregar-anuncio [id]
+  [:carregar :anuncio {:path (str "/listings/" id)}])
+
+(def ^:private recarregar-pedidos
+  [:carregar :pedidos {:path "/bookings/received"}])
+
+(rf/reg-event-fx
+ :salvar-anuncio
+ (fn [_ [_ id dados]]
+   {:dispatch [:enviar (if id
+                         {:method :put :path (str "/listings/" id) :body dados}
+                         {:method :post :path "/listings" :body dados})
+               [:anuncio-salvo (if id "Alterações salvas" "Bike anunciada! Agora adicione fotos.")]]}))
+
+(rf/reg-event-fx
+ :anuncio-salvo
+ (fn [{:keys [db]} [_ mensagem anuncio]]
+   {:db       (assoc-in db [:dados :anuncio] anuncio)
+    :navegar  [:editar-anuncio {:id (:id anuncio)}]
+    :dispatch [:avisar :sucesso mensagem]}))
+
+(rf/reg-event-fx
+ :mudar-status-anuncio
+ (fn [_ [_ id status]]
+   {:dispatch [:enviar {:method :put :path (str "/listings/" id) :body {:status status}}
+               [:anuncio-atualizado (if (= "pausado" status) "Anúncio pausado" "Anúncio publicado")]]}))
+
+(rf/reg-event-fx
+ :anuncio-atualizado
+ (fn [{:keys [db]} [_ mensagem anuncio]]
+   {:db       (assoc-in db [:dados :anuncio] anuncio)
+    :dispatch [:avisar :sucesso mensagem]}))
+
+(rf/reg-event-fx
+ :adicionar-foto
+ (fn [_ [_ id url]]
+   {:dispatch [:enviar {:method :post :path (str "/listings/" id "/photos") :body {:url url}}
+               [:recarregar-anuncio id "Foto adicionada"]]}))
+
+(rf/reg-event-fx
+ :remover-foto
+ (fn [_ [_ id foto-id]]
+   {:dispatch [:enviar {:method :delete :path (str "/listings/" id "/photos/" foto-id)}
+               [:recarregar-anuncio id "Foto removida"]]}))
+
+(rf/reg-event-fx
+ :bloquear-datas
+ (fn [_ [_ id periodo]]
+   {:dispatch [:enviar {:method :post :path (str "/listings/" id "/availability-blocks") :body periodo}
+               [:anuncio-atualizado "Datas bloqueadas"]]}))
+
+(rf/reg-event-fx
+ :desbloquear-datas
+ (fn [_ [_ id bloqueio-id]]
+   {:dispatch [:enviar {:method :delete :path (str "/listings/" id "/availability-blocks/" bloqueio-id)}
+               [:recarregar-anuncio id "Datas liberadas"]]}))
+
+(rf/reg-event-fx
+ :recarregar-anuncio
+ (fn [_ [_ id mensagem]]
+   {:fx [[:dispatch (recarregar-anuncio id)]
+         [:dispatch [:avisar :sucesso mensagem]]]}))
+
+(rf/reg-fx
+ :upload-cloudinary
+ (fn [{:keys [arquivo on-ok on-erro]}]
+   (let [form (js/FormData.)]
+     (.append form "file" arquivo)
+     (.append form "upload_preset" config/CLOUDINARY_PRESET)
+     (-> (js/fetch (str "https://api.cloudinary.com/v1_1/" config/CLOUDINARY_CLOUD "/image/upload")
+                   #js {:method "POST" :body form})
+         (.then #(if (.-ok %) (.json %) (throw (js/Error. "upload"))))
+         (.then (fn [^js resposta] (rf/dispatch (conj on-ok (.-secure_url resposta)))))
+         (.catch #(rf/dispatch on-erro))))))
+
+(rf/reg-event-fx
+ :enviar-foto
+ (fn [{:keys [db]} [_ id arquivo]]
+   {:db                (assoc db :enviando? true)
+    :upload-cloudinary {:arquivo arquivo
+                        :on-ok   [:foto-enviada id]
+                        :on-erro [:envio-falhou {:mensagem "Não foi possível enviar a foto"}]}}))
+
+(rf/reg-event-fx
+ :foto-enviada
+ (fn [{:keys [db]} [_ id url]]
+   {:db       (dissoc db :enviando?)
+    :dispatch [:adicionar-foto id url]}))
+
+(rf/reg-event-fx
+ :acao-pedido
+ (fn [_ [_ acao id mensagem]]
+   {:dispatch [:enviar {:method :post :path (str "/bookings/" id "/" acao)}
+               [:pedido-atualizado mensagem]]}))
+
+(rf/reg-event-fx
+ :pedido-atualizado
+ (fn [_ [_ mensagem]]
+   {:fx [[:dispatch recarregar-pedidos]
+         [:dispatch [:avisar :sucesso mensagem]]]}))
+
+(rf/reg-event-fx
+ :avaliar-locatario
+ (fn [_ [_ id nota]]
+   {:dispatch [:enviar {:method :post :path (str "/bookings/" id "/reviews") :body {:alvo "renter" :nota nota}}
+               [:pedido-atualizado "Avaliação enviada"]]}))
+
+;; ---------------------------------------------------------------- avaliação (locatário)
 
 (rf/reg-event-fx
  :avaliar

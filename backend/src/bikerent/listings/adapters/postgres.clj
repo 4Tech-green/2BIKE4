@@ -79,7 +79,7 @@
                      :limit    100}))
 
   (list-by-owner [_ owner-id]
-    (db/execute! ds {:select   (conj cols foto-capa)
+    (db/execute! ds {:select   (-> cols (conj foto-capa) (into avaliacao))
                      :from     [[:listings :l]]
                      :where    [:= :l.owner_id owner-id]
                      :order-by [[:l.criado_em :desc]]}))

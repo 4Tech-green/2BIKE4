@@ -7,9 +7,9 @@
             [reitit.frontend.easy :as rfe]))
 
 (defn- conflito
-  "Período ocupado que cruza o escolhido (datas AAAA-MM-DD comparam como texto)."
+  "Período ocupado que cruza o escolhido."
   [ocupados inicio fim]
-  (some #(when (and (<= inicio (:fim %)) (>= fim (:inicio %))) %) ocupados))
+  (some #(when (and (c/data<= inicio (:fim %)) (c/data<= (:inicio %) fim)) %) ocupados))
 
 (defn- galeria [{:keys [fotos] :as bike}]
   (if (seq fotos)
@@ -30,7 +30,7 @@
                            :value     (or inicio "")
                            :on-change #(let [v (.. % -target -value)]
                                          (swap! datas (fn [d] (cond-> (assoc d :inicio v)
-                                                                (or (str/blank? (:fim d)) (< (:fim d) v)) (assoc :fim v)))))}]
+                                                                (or (str/blank? (:fim d)) (not (c/data<= v (:fim d)))) (assoc :fim v)))))}]
       [c/campo "Devolução" {:type      "date"
                             :min       (or inicio (c/hoje))
                             :value     (or fim "")
@@ -53,7 +53,8 @@
          [:p [:span.text-2xl.font-bold (c/preco diaria_centavos)] [:span.text-suave " / dia"]]
          (cond
            (= owner_id (:id user))
-           [:p.mt-3.text-suave "Esta bike é sua."]
+           [:p.mt-3.text-suave "Esta bike é sua. "
+            [:a.font-semibold.text-texto.underline {:href (rfe/href :editar-anuncio {:id id})} "Editar anúncio"]]
 
            (not= "publicado" status)
            [:p.mt-3.text-suave "Esta bike está pausada pelo dono."]

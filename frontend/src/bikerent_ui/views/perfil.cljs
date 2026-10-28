@@ -19,4 +19,7 @@
        [:a {:href  (rfe/href :reservas)
             :class "block rounded-2xl border border-borda bg-superficie p-4 font-medium"}
         "Minhas reservas →"]
+       [:a {:href  (rfe/href :meus-anuncios)
+            :class "block rounded-2xl border border-borda bg-superficie p-4 font-medium"}
+        "Minhas bikes, pedidos e ganhos →"]
        [c/botao {:variante :secundario :on-click #(rf/dispatch [:sair])} "Sair"]])]])
