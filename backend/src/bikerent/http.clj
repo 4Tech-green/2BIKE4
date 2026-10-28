@@ -3,6 +3,7 @@
   (:require [bikerent.http.auth :as auth]
             [bikerent.http.bookings :as bookings]
             [bikerent.http.listings :as listings]
+            [bikerent.http.search :as search]
             [bikerent.http.users :as users]
             [bikerent.shared.errors :as errors]
             [clojure.tools.logging :as log]
@@ -75,7 +76,8 @@
          ["/health" {:get {:handler (health datasource)}}]]
         (concat (users/routes deps)
                 (listings/routes deps)
-                (bookings/routes deps))))
+                (bookings/routes deps)
+                (search/routes deps))))
 
 (defn handler [{:keys [jwt-secret] :as deps}]
   (-> (ring/ring-handler

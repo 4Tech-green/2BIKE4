@@ -18,6 +18,11 @@ REPL: `clojure -M:dev`, depois `(go)`, `(reset)` e `(halt)`.
 
 Saúde da API: `GET /api/v1/health`.
 
+Busca semântica (`GET /api/v1/search?q=...`): sem configuração usa vetores fake,
+que só acham palavras em comum. Com `GEMINI_API_KEY` definida usa o Gemini, que
+entende sinônimos. Ao trocar de um para o outro, rode
+`update listings set embedding = null` no banco e reinicie a API para reindexar.
+
 Estrutura (hexagonal): cada módulo de negócio em `src/bikerent/<modulo>/` com
 `domain` (regras puras), `ports` (protocolos), `adapters` (Postgres, IA, pagamento)
 e `logic` (casos de uso). `shared/` tem o que é comum, `http.clj` as rotas e

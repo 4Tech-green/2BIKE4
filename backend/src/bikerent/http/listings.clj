@@ -2,7 +2,7 @@
   (:require [bikerent.listings.domain :as domain]
             [bikerent.listings.logic :as logic]))
 
-(def ^:private Data [:re {:error/message "use o formato AAAA-MM-DD"} #"^\d{4}-\d{2}-\d{2}$"])
+(def Data [:re {:error/message "use o formato AAAA-MM-DD"} #"^\d{4}-\d{2}-\d{2}$"])
 
 (def ^:private campos
   [[:titulo [:string {:min 3 :max 120}]]

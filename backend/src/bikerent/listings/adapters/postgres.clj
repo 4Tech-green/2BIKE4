@@ -1,6 +1,8 @@
 (ns bikerent.listings.adapters.postgres
   (:require [bikerent.db :as db]
             [bikerent.listings.ports :as ports]
+            [clojure.string :as str]
+            [honey.sql :as sql]
             [integrant.core :as ig]))
 
 (def ^:private cols
@@ -11,7 +13,20 @@
   [{:select [:url] :from :listing_photos :where [:= :listing_id :l.id] :order-by [:ordem :id] :limit 1}
    :foto])
 
+(def ^:private avaliacao
+  (let [das-avaliacoes {:from  [[:reviews :rv]]
+                        :join  [[:bookings :bk] [:= :bk.id :rv.booking_id]]
+                        :where [:and [:= :bk.listing_id :l.id] [:= :rv.alvo "listing"]]}]
+    [[(assoc das-avaliacoes :select [[[:round [:avg :rv.nota] [:inline 1]]]]) :nota_media]
+     [(assoc das-avaliacoes :select [[[:count :*]]]) :total_avaliacoes]]))
+
 (def ^:private ocupa ["confirmed" "completed"])
+
+;; distância de cosseno do pgvector
+(sql/register-op! :<=>)
+
+(defn- pgvector [vetor]
+  [:cast (str "[" (str/join "," vetor) "]") :vector])
 
 (defn- livre-no-periodo [periodo]
   [:and
@@ -39,7 +54,7 @@
       (db/execute-one! ds {:update :listings :set changes :where [:= :id id]})))
 
   (find-by-id [_ id]
-    (when-let [listing (db/execute-one! ds {:select (conj cols [:u.nome :dono_nome])
+    (when-let [listing (db/execute-one! ds {:select (-> cols (conj [:u.nome :dono_nome]) (into avaliacao))
                                             :from   [[:listings :l]]
                                             :join   [[:users :u] [:= :u.id :l.owner_id]]
                                             :where  [:= :l.id id]})]
@@ -51,7 +66,7 @@
                                (db/execute! ds (futuros :bookings id [:in :status ocupa]))))))
 
   (search [_ {:keys [cidade tipo preco_min preco_max periodo]}]
-    (db/execute! ds {:select   (conj cols foto-capa)
+    (db/execute! ds {:select   (-> cols (conj foto-capa) (into avaliacao))
                      :from     [[:listings :l]]
                      :where    (into [:and [:= :l.status "publicado"]]
                                      (remove nil?)
@@ -89,7 +104,21 @@
   (remove-block! [_ listing-id block-id]
     (pos? (:next.jdbc/update-count
            (db/execute-one! ds {:delete-from :availability_blocks
-                                :where [:and [:= :id block-id] [:= :listing_id listing-id]]})))))
+                                :where [:and [:= :id block-id] [:= :listing_id listing-id]]}))))
+
+  (save-embedding! [_ listing-id vetor]
+    (db/execute-one! ds {:update :listings :set {:embedding (pgvector vetor)} :where [:= :id listing-id]}))
+
+  (ids-without-embedding [_]
+    (mapv :id (db/execute! ds {:select [:id] :from :listings :where [:= :embedding nil]})))
+
+  (search-similar [_ vetor limite]
+    (let [similaridade [:- [:inline 1] [:<=> :l.embedding (pgvector vetor)]]]
+      (db/execute! ds {:select   (-> cols (conj foto-capa) (into avaliacao) (conj [similaridade :similaridade]))
+                       :from     [[:listings :l]]
+                       :where    [:and [:= :l.status "publicado"] [:<> :l.embedding nil] [:> similaridade 0]]
+                       :order-by [[:similaridade :desc]]
+                       :limit    limite}))))
 
 (defmethod ig/init-key ::repository [_ {:keys [datasource]}]
   (->PostgresListingRepository datasource))
