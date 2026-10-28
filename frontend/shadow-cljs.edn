@@ -12,4 +12,6 @@
                 :output-dir      "public/js"
                 :asset-path      "js"
                 :modules         {:main {:init-fn bikerent-ui.core/init}}
-                :closure-defines {bikerent-ui.config/API_URL #shadow/env ["API_URL" :default "http://localhost:3000/api/v1"]}}}}
+                :closure-defines {bikerent-ui.config/API_URL           #shadow/env ["API_URL" :default "http://localhost:3000/api/v1"]
+                                  bikerent-ui.config/CLOUDINARY_CLOUD  #shadow/env ["CLOUDINARY_CLOUD" :default ""]
+                                  bikerent-ui.config/CLOUDINARY_PRESET #shadow/env ["CLOUDINARY_PRESET" :default ""]}}}}

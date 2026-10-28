@@ -27,6 +27,48 @@
       (.fitBounds mapa (L/latLngBounds (clj->js (map (juxt :lat :lng) pontos))) #js {:padding #js [40 40] :maxZoom 15})
       (.setView mapa centro-brasil 4))))
 
+(defn seletor-local
+  "Mapa para o dono marcar onde a bike fica. `ao-escolher` recebe [lat lng]."
+  [_posicao _ao-escolher]
+  (let [no     (atom nil)
+        estado (atom nil)
+        marcar! (fn [{:keys [mapa marcador] :as e} [lat lng] centralizar?]
+                  (when lat
+                    (if marcador
+                      (.setLatLng marcador #js [lat lng])
+                      (swap! estado assoc :marcador
+                             (-> (L/circleMarker #js [lat lng]
+                                                 #js {:radius 10 :weight 2 :color "#fff" :fillColor "#18181b" :fillOpacity 0.9})
+                                 (.addTo mapa))))
+                    (when centralizar? (.setView mapa #js [lat lng] (max 14 (.getZoom mapa)))))
+                  e)]
+    (r/create-class
+     {:display-name "seletor-local"
+      :component-did-mount
+      (fn [this]
+        (let [[_ [lat lng] ao-escolher] (r/argv this)
+              m (L/map @no)]
+          (-> (L/tileLayer "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                           #js {:maxZoom 19 :attribution "© OpenStreetMap"})
+              (.addTo m))
+          (if lat (.setView m #js [lat lng] 14) (.setView m centro-brasil 4))
+          (reset! estado {:mapa m})
+          (marcar! @estado [lat lng] false)
+          (.on m "click" (fn [e]
+                           (let [p (.-latlng e)]
+                             ((:ao-escolher @estado ao-escolher) [(.-lat p) (.-lng p)]))))))
+      :component-did-update
+      (fn [this [_ antes]]
+        (let [[_ posicao ao-escolher] (r/argv this)]
+          (swap! estado assoc :ao-escolher ao-escolher)
+          (when (not= antes posicao)
+            (marcar! @estado posicao true))))
+      :component-will-unmount
+      (fn [] (some-> @estado :mapa .remove))
+      :reagent-render
+      (fn [_ _]
+        [:div {:ref #(reset! no %) :class "z-0 h-64 w-full rounded-2xl border border-borda"}])})))
+
 (defn mapa [_bikes]
   (let [no     (atom nil)
         estado (atom nil)]

@@ -8,6 +8,12 @@
 (defn- minhas-reservas [_]
   [[:carregar :minhas-reservas {:path "/bookings/mine"}]])
 
+(defn- meus-anuncios [_]
+  [[:carregar :meus-anuncios {:path "/me/listings"}]])
+
+(defn- pedidos [_]
+  [[:carregar :pedidos {:path "/bookings/received"}]])
+
 (def rotas
   [["/"           {:name     :inicio
                    :carregar (fn [_] [[:carregar :recentes {:path "/listings"}]])}]
@@ -23,6 +29,17 @@
    ["/reservas/:id"         {:name :reserva :login? true :carregar minhas-reservas}]
    ["/reservas/:id/pagar"   {:name :pagar :login? true :carregar minhas-reservas}]
    ["/reservas/:id/avaliar" {:name :avaliar :login? true :carregar minhas-reservas}]
+   ;; proprietário
+   ["/anuncios"   {:name :meus-anuncios :login? true :carregar meus-anuncios}]
+   ;; "novo" também casa com :id; :conflicting faz testar na ordem
+   ["/anuncios/novo" {:name :novo-anuncio :login? true :conflicting true}]
+   ["/anuncios/:id"  {:name        :editar-anuncio
+                      :conflicting true
+                      :login?      true
+                      :carregar (fn [{{:keys [id]} :path}]
+                                  [[:carregar :anuncio {:path (str "/listings/" id)}]])}]
+   ["/pedidos"    {:name :pedidos :login? true :carregar pedidos}]
+   ["/ganhos"     {:name :ganhos :login? true :carregar pedidos}]
    ["/perfil"     {:name     :perfil
                    :login?   true
                    :carregar (fn [_] [[:carregar :perfil {:path "/me"}]])}]])

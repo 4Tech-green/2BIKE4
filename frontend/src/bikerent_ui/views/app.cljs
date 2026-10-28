@@ -2,6 +2,7 @@
   (:require [bikerent-ui.views.bike :as bike]
             [bikerent-ui.views.busca :as busca]
             [bikerent-ui.views.comum :as c]
+            [bikerent-ui.views.dono :as dono]
             [bikerent-ui.views.entrada :as entrada]
             [bikerent-ui.views.perfil :as perfil]
             [bikerent-ui.views.reservas :as reservas]
@@ -21,6 +22,12 @@
       :pagar    [reservas/pagamento id]
       :avaliar  ^{:key id} [reservas/avaliacao id]
       :perfil   [perfil/perfil]
+
+      :meus-anuncios  [dono/meus-anuncios]
+      :novo-anuncio   [dono/novo-anuncio]
+      :editar-anuncio [dono/editar-anuncio]
+      :pedidos        [dono/pedidos]
+      :ganhos         [dono/ganhos]
       [c/carregando])))
 
 (defn app []
