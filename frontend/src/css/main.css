@@ -1,0 +1,33 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Identidade visual provisória (neutra), em R G B. Trocar quando chegarem
+   o logo e as cores da marca. */
+:root {
+  --cor-primaria: 24 24 27;
+  --cor-primaria-contraste: 255 255 255;
+  --cor-fundo: 250 250 250;
+  --cor-superficie: 255 255 255;
+  --cor-texto: 24 24 27;
+  --cor-suave: 113 113 122;
+  --cor-borda: 228 228 231;
+  --cor-sucesso: 22 163 74;
+  --cor-alerta: 217 119 6;
+  --cor-perigo: 220 38 38;
+  --cor-info: 37 99 235;
+}
+
+body {
+  @apply bg-fundo text-texto antialiased;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@layer utilities {
+  /* espaço da barra de gestos do iPhone/Android no app instalado */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
