@@ -32,6 +32,48 @@ h1, h2, h3 {
   @apply font-bold;
 }
 
+/* Etiqueta de preço no mapa: verde (pin da marca); a escolhida fica laranja. */
+.pin-preco {
+  position: relative;
+  transform: translate(-50%, calc(-100% - 6px));
+  white-space: nowrap;
+  padding: 3px 10px;
+  border: 2px solid #fff;
+  border-radius: 9999px;
+  background: rgb(var(--cor-primaria));
+  color: #fff;
+  font: 700 13px "Poppins", system-ui, sans-serif;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.3);
+  cursor: pointer;
+}
+.pin-preco::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-bottom: 0;
+  border-top-color: rgb(var(--cor-primaria));
+}
+.pin-preco-ativo {
+  background: rgb(var(--cor-destaque));
+  font-size: 15px;
+}
+.pin-preco-ativo::after {
+  border-top-color: rgb(var(--cor-destaque));
+}
+
+/* Mapa da home: a tela toda entre o cabeçalho e a barra de navegação. */
+.altura-mapa {
+  height: calc(100dvh - 57px - 62px - env(safe-area-inset-bottom));
+}
+@media (min-width: 768px) {
+  .altura-mapa {
+    height: calc(100dvh - 65px);
+  }
+}
+
 @layer utilities {
   /* espaço da barra de gestos do iPhone/Android no app instalado */
   .pb-safe {

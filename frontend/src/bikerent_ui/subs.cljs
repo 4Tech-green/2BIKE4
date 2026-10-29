@@ -6,6 +6,9 @@
 (rf/reg-sub :logado? (fn [db _] (some? (:token db))))
 (rf/reg-sub :enviando? (fn [db _] (:enviando? db)))
 (rf/reg-sub :aviso (fn [db _] (:aviso db)))
+(rf/reg-sub :local (fn [db _] (:local db)))
+(rf/reg-sub :localizando? (fn [db _] (:localizando? db)))
+(rf/reg-sub :bike-selecionada (fn [db _] (:bike-selecionada db)))
 
 (rf/reg-sub :dados (fn [db [_ chave]] (get-in db [:dados chave])))
 (rf/reg-sub :carregando? (fn [db [_ chave]] (get-in db [:carregando chave])))

@@ -1,5 +1,6 @@
 (ns bikerent-ui.events
   (:require [bikerent-ui.config :as config]
+            [clojure.string :as str]
             [re-frame.core :as rf]
             [reitit.frontend.easy :as rfe]))
 
@@ -106,6 +107,74 @@
    {:dispatch (if (seq q)
                 [:carregar :resultados {:path "/search" :query {:q q}}]
                 [:carregar :resultados {:path "/listings" :query (dissoc query :ver)}])}))
+
+;; ---------------------------------------------------------------- onde estou / para onde vou
+
+(rf/reg-fx
+ :geolocalizacao
+ (fn [{:keys [on-ok on-erro]}]
+   (if-let [geo (some-> js/navigator .-geolocation)]
+     (.getCurrentPosition geo
+                          (fn [^js p] (rf/dispatch (conj on-ok (.. p -coords -latitude) (.. p -coords -longitude))))
+                          #(rf/dispatch on-erro)
+                          #js {:timeout 10000 :maximumAge 300000})
+     (rf/dispatch on-erro))))
+
+(rf/reg-fx
+ :geocodificar
+ ;; Nominatim (OpenStreetMap): bairro, endereço ou cidade → coordenadas
+ (fn [{:keys [texto on-ok on-erro]}]
+   (-> (js/fetch (str "https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=br"
+                      "&accept-language=pt-BR&q=" (js/encodeURIComponent texto)))
+       (.then (fn [^js resp] (.json resp)))
+       (.then (fn [^js lugares]
+                (if-let [^js lugar (aget lugares 0)]
+                  (rf/dispatch (conj on-ok
+                                     (first (str/split (.-display_name lugar) #","))
+                                     (js/parseFloat (.-lat lugar))
+                                     (js/parseFloat (.-lon lugar))))
+                  (rf/dispatch on-erro))))
+       (.catch #(rf/dispatch on-erro)))))
+
+(rf/reg-event-fx
+ :localizar
+ (fn [{:keys [db]} [_ silencioso?]]
+   {:db             (assoc db :localizando? true)
+    :geolocalizacao {:on-ok   [:local-encontrado nil] ; sem nome = "perto de você"
+                     :on-erro [:local-falhou silencioso?]}}))
+
+(rf/reg-event-fx
+ :localizar-auto
+ ;; uma tentativa por sessão; sem permissão, o mapa mostra todas as bikes
+ (fn [{:keys [db]} _]
+   (when-not (or (:local db) (:tentou-localizar? db))
+     {:db       (assoc db :tentou-localizar? true)
+      :dispatch [:localizar true]})))
+
+(rf/reg-event-db
+ :local-encontrado
+ (fn [db [_ nome lat lng]]
+   (-> db
+       (assoc :local {:lat lat :lng lng :nome nome})
+       (dissoc :localizando? :bike-selecionada))))
+
+(rf/reg-event-fx
+ :local-falhou
+ (fn [{:keys [db]} [_ silencioso?]]
+   (cond-> {:db (dissoc db :localizando?)}
+     (not silencioso?) (assoc :dispatch [:avisar :erro "Não conseguimos sua localização. Digite um bairro ou cidade."]))))
+
+(rf/reg-event-fx
+ :buscar-lugar
+ (fn [_ [_ texto]]
+   {:geocodificar {:texto   texto
+                   :on-ok   [:local-encontrado]
+                   :on-erro [:avisar :erro (str "Não encontramos “" texto "”. Tente bairro e cidade.")]}}))
+
+(rf/reg-event-db
+ :selecionar-bike
+ (fn [db [_ id]]
+   (assoc db :bike-selecionada id)))
 
 ;; ---------------------------------------------------------------- escrita na API
 

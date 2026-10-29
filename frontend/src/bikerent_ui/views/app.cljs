@@ -33,9 +33,10 @@
 (defn app []
   (let [rota  @(rf/subscribe [:rota])
         atual (get-in rota [:data :name])]
-    [:div {:class "min-h-screen pb-24 md:pb-10"}
+    ;; a home é o mapa em tela cheia, sem margens
+    [:div {:class (if (= atual :inicio) "min-h-screen" "min-h-screen pb-24 md:pb-10")}
      [c/aviso]
      [c/cabecalho atual]
-     [:main {:class "mx-auto max-w-5xl px-4 pt-4"}
+     [:main {:class (if (= atual :inicio) "relative" "mx-auto max-w-5xl px-4 pt-4")}
       [pagina rota]]
      [c/barra-navegacao atual]]))

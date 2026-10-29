@@ -39,6 +39,32 @@
   [inicio fim]
   (inc (js/Math.round (/ (- (js/Date.parse fim) (js/Date.parse inicio)) 86400000))))
 
+(defn distancia-km
+  "Distância em linha reta (fórmula de haversine)."
+  [a b]
+  (let [rad  #(* % (/ js/Math.PI 180))
+        dlat (rad (- (:lat b) (:lat a)))
+        dlng (rad (- (:lng b) (:lng a)))
+        h    (+ (js/Math.pow (js/Math.sin (/ dlat 2)) 2)
+                (* (js/Math.cos (rad (:lat a))) (js/Math.cos (rad (:lat b)))
+                   (js/Math.pow (js/Math.sin (/ dlng 2)) 2)))]
+    (* 2 6371 (js/Math.asin (js/Math.sqrt h)))))
+
+(defn distancia-texto [km]
+  (if (< km 1)
+    (str (* 50 (js/Math.round (/ (* km 1000) 50))) " m")
+    (str (str/replace (.toFixed km (if (< km 10) 1 0)) "." ",") " km")))
+
+(defn com-distancia
+  "Acrescenta :distancia (km) a partir do `local` e ordena da mais perto para a mais longe."
+  [bikes local]
+  (if local
+    (->> bikes
+         (filter :lat)
+         (map #(assoc % :distancia (distancia-km local %)))
+         (sort-by :distancia))
+    bikes))
+
 (def tipos
   [["urbana" "Urbana"] ["mountain" "Mountain"] ["speed" "Speed"] ["hibrida" "Híbrida"]
    ["eletrica" "Elétrica"] ["dobravel" "Dobrável"] ["infantil" "Infantil"]])
@@ -130,7 +156,7 @@
     [:div {:class (str "flex items-center justify-center bg-primaria/5 " classe)}
      [:img {:src "brand/icone-pin.svg" :alt "" :class "h-1/3 max-h-16 w-auto"}]]))
 
-(defn card-bike [{:keys [id titulo cidade tipo diaria_centavos] :as bike}]
+(defn card-bike [{:keys [id titulo cidade tipo diaria_centavos distancia] :as bike}]
   [:a {:href  (rfe/href :bike {:id id})
        :class "block overflow-hidden rounded-2xl border border-borda bg-superficie transition hover:shadow-md"}
    [foto-bike bike "aspect-[4/3] w-full"]
@@ -138,7 +164,7 @@
     [:div.flex.items-start.justify-between.gap-2
      [:h3.truncate.font-semibold titulo]
      [nota-resumo bike]]
-    [:p.text-sm.text-suave (str cidade " · " (tipo-nome tipo))]
+    [:p.text-sm.text-suave (str (when distancia (str (distancia-texto distancia) " · ")) cidade " · " (tipo-nome tipo))]
     [:p.mt-1 [:span.font-bold.text-destaque (preco diaria_centavos)] [:span.text-sm.text-suave " / dia"]]]])
 
 (defn grade-bikes [bikes]

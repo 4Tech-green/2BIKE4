@@ -14,13 +14,20 @@
 (defn- pedidos [_]
   [[:carregar :pedidos {:path "/bookings/received"}]])
 
+(defn- hoje []
+  (let [d    (js/Date.)
+        dois #(.padStart (str %) 2 "0")]
+    (str (.getFullYear d) "-" (dois (inc (.getMonth d))) "-" (dois (.getDate d)))))
+
 (def rotas
   [["/"           {:name     :inicio
-                   :carregar (fn [_] [[:carregar :recentes {:path "/listings"}]])}]
+                   :carregar (fn [_]
+                               [[:carregar :disponiveis-hoje {:path "/listings" :query {:inicio (hoje) :fim (hoje)}}]
+                                [:localizar-auto]])}]
    ["/entrar"     {:name :entrar}]
    ["/cadastro"   {:name :cadastro}]
    ["/busca"      {:name     :busca
-                   :carregar (fn [{:keys [query]}] [[:buscar query]])}]
+                   :carregar (fn [{:keys [query]}] [[:buscar query] [:localizar-auto]])}]
    ["/bikes/:id"  {:name     :bike
                    :carregar (fn [{{:keys [id]} :path}]
                                [[:carregar :bike {:path (str "/listings/" id)}]
