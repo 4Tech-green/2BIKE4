@@ -1,0 +1,29 @@
+;; Fotos do seed (Wikimedia Commons, licenças livres; créditos em CREDITOS-FOTOS.md),
+;; hospedadas no Cloudinary. Tipo sem fotos usa o ícone da marca.
+{"eletrica"
+ ["https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283850/cu1iosdqgzvq50tkqpav.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283851/nue4zecoatvgq1ivrl5a.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283852/h4kcorpqoef7vlzavtvg.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283853/et3syqlj34cd9qd8rfeh.jpg"]
+ "hibrida"
+ ["https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283854/sw2pu9nqlvviaw9e7mpf.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283855/rpcyb1f9iyyjor52zxme.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283856/jvjjtboks8ezg1flmm55.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283857/qfnms3upcuxkhndbujlt.jpg"]
+ "mountain"
+ ["https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283858/gq2urjrqv52xt7elymma.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283858/uo645uqxlkz7cwrz4ee3.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283859/bj1lesrsbl7br03eoy7m.jpg"]
+ "dobravel"
+ ["https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283860/x1tkb3k8iwudry9flq1r.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283861/dnmqavo7kabjdyewacqy.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283861/kglfzntr3fr1lk3e0fta.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283862/kds3qqhj12ypeklqeyf4.jpg"]
+ "urbana"
+ ["https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283863/x8d0gjmxwq5xg8nobbu7.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283864/ehgpptj4gon2qg3yjrpt.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283864/kbbzod87yanrpskjdkut.jpg"]
+ "infantil"
+ ["https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283865/livs7clcgvkxil7z5uoa.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283866/zphaciluasq2b677d0vp.jpg"
+  "https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283867/he8cjhbbawghffve1c8c.jpg"]}
