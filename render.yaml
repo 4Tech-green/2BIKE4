@@ -1,0 +1,16 @@
+# Blueprint do Render: New → Blueprint → escolher este repositório.
+services:
+  - type: web
+    name: 2bike4
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL     # connection string do branch main do Neon
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY   # opcional: sem ela a busca usa os vetores locais
+        sync: false

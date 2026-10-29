@@ -54,8 +54,8 @@
           (if lat (.setView m #js [lat lng] 14) (.setView m centro-brasil 4))
           (reset! estado {:mapa m})
           (marcar! @estado [lat lng] false)
-          (.on m "click" (fn [e]
-                           (let [p (.-latlng e)]
+          (.on m "click" (fn [^js e]
+                           (let [^js p (.-latlng e)]
                              ((:ao-escolher @estado ao-escolher) [(.-lat p) (.-lng p)]))))))
       :component-did-update
       (fn [this [_ antes]]

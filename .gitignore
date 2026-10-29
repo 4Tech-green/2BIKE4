@@ -11,3 +11,4 @@ node_modules/
 .shadow-cljs/
 frontend/public/js/
 frontend/public/css/
+backend/resources/public/

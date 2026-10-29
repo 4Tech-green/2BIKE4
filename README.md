@@ -49,10 +49,20 @@ Fotos: com `CLOUDINARY_CLOUD` e `CLOUDINARY_PRESET` (um upload preset "unsigned"
 definidas no build, o dono envia a foto do celular/computador direto para o
 Cloudinary. Sem elas, a tela pede o link de uma imagem já publicada.
 
-### Dados de demonstração (banco dev)
+## Dados de demonstração
 
-Criados à mão durante o card 6; o seed de verdade vem no card 8.
-Senha das duas contas: `123456`.
+`DATABASE_URL=... clojure -M:seed` (em `backend/`) apaga e recria 12 pessoas,
+45 bikes em 11 capitais, cerca de 100 reservas e 200 avaliações. Pode rodar
+quantas vezes quiser; só mexe nas contas `@2bike4.test`. Senha de todas: `demo1234`.
 
-- `ana@demo.test` — dona das 6 bikes em Recife/Olinda
-- `bruno@demo.test` — locatário, com reservas em vários estados
+- `ana@2bike4.test`: dona das bikes de Recife/Olinda, com pedidos para confirmar
+- `bruno@2bike4.test`: locatário, com uma reserva em cada estado (pagar, avaliar...)
+
+## Deploy (Render + Neon)
+
+Um serviço só: o `Dockerfile` compila o frontend e o backend, e a API entrega
+as telas na mesma URL. No Render: *New → Blueprint*, escolher este repositório
+(usa o `render.yaml`) e preencher `DATABASE_URL` com a connection string do
+branch `main` do Neon. As migrações rodam ao subir; depois, rodar o seed
+apontando para o mesmo banco. No plano gratuito o serviço dorme após 15 minutos
+sem acesso e leva cerca de 1 minuto para acordar.

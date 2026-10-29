@@ -1,0 +1,9 @@
+.git
+.idea
+**/node_modules
+**/.cpcache
+**/.shadow-cljs
+**/target
+frontend/public/js
+frontend/public/css
+backend/resources/public

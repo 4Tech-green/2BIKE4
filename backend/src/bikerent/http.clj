@@ -94,9 +94,12 @@
                              muuntaja/format-request-middleware
                              coercion/coerce-response-middleware
                              coercion/coerce-request-middleware]}})
-       (ring/create-default-handler
-        {:not-found          (constantly (json-response 404 :not-found "Rota não encontrada"))
-         :method-not-allowed (constantly (json-response 405 :method-not-allowed "Método não permitido"))}))
+       (ring/routes
+        ;; no deploy o frontend compilado vem em resources/public (ver Dockerfile)
+        (ring/create-resource-handler {:path "/"})
+        (ring/create-default-handler
+         {:not-found          (constantly (json-response 404 :not-found "Rota não encontrada"))
+          :method-not-allowed (constantly (json-response 405 :method-not-allowed "Método não permitido"))})))
       ;; Web, Capacitor e Electron rodam em origens diferentes; o token vai no
       ;; cabeçalho Authorization (sem cookies), então liberar todas é seguro aqui.
       (wrap-cors :access-control-allow-origin [#".*"]

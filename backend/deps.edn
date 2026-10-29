@@ -30,6 +30,15 @@
   ;; clojure -M:migrate [migrate|rollback|create <nome>]
   :migrate {:main-opts ["-m" "bikerent.db"]}
 
+  ;; clojure -T:build uber
+  :build   {:deps       {io.github.clojure/tools.build {:mvn/version "0.10.5"}}
+            :ns-default build}
+
+  ;; DATABASE_URL=... clojure -M:seed  (apaga e recria os dados de demonstração)
+  :seed    {:extra-paths ["dev"]
+            :extra-deps  {integrant/repl {:mvn/version "0.3.3"}}
+            :main-opts   ["-m" "seed"]}
+
   ;; clojure -M:test
   :test    {:extra-paths ["test"]
             :extra-deps  {io.github.cognitect-labs/test-runner

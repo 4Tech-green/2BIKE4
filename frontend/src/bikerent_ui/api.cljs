@@ -16,7 +16,7 @@
     (cond-> (str config/API_URL path)
       (seq qs) (str "?" qs))))
 
-(defn- ler-resposta [resp]
+(defn- ler-resposta [^js resp]
   (if (= 204 (.-status resp))
     (js/Promise.resolve {:status 204})
     (-> (.json resp)

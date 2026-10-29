@@ -79,7 +79,7 @@
 (defn- usar-minha-localizacao [form]
   (if-let [geo (some-> js/navigator .-geolocation)]
     (.getCurrentPosition geo
-                         #(swap! form assoc :lat (.. % -coords -latitude) :lng (.. % -coords -longitude))
+                         (fn [^js posicao] (swap! form assoc :lat (.. posicao -coords -latitude) :lng (.. posicao -coords -longitude)))
                          #(rf/dispatch [:avisar :erro "Não foi possível obter sua localização"]))
     (rf/dispatch [:avisar :erro "Seu navegador não informa a localização"])))
 
