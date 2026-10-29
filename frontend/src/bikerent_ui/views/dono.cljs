@@ -31,7 +31,7 @@
   [:div
    [abas :meus-anuncios]
    [:a {:href  (rfe/href :novo-anuncio)
-        :class "mb-4 block rounded-xl bg-primaria px-4 py-3 text-center font-semibold text-primaria-contraste"}
+        :class "mb-4 block rounded-xl bg-primaria px-4 py-3 text-center font-semibold text-primaria-contraste hover:bg-primaria-hover"}
     "+ Anunciar uma bike"]
    [c/conteudo :meus-anuncios
     (fn [anuncios]
@@ -117,7 +117,7 @@
            [:button {:type "button" :class "text-sm underline" :on-click #(usar-minha-localizacao form)}
             "Usar minha localização"]]
           [mapa/seletor-local [(:lat @form) (:lng @form)] (fn [[lat lng]] (swap! form assoc :lat lat :lng lng))]]
-         [c/botao {:type "submit" :disabled enviando?}
+         [c/botao {:type "submit" :variante (if (:id anuncio) :primario :destaque) :disabled enviando?}
           (cond enviando? "Salvando..." (:id anuncio) "Salvar alterações" :else "Publicar anúncio")]]))))
 
 (defn- secao [titulo & filhos]

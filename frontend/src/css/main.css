@@ -4,17 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Identidade visual provisória (neutra), em R G B. Trocar quando chegarem
-   o logo e as cores da marca. */
+/* Identidade visual 2bike4 (ver frontend/CLAUDE.md), em R G B.
+   Verde natureza é a cor dominante; laranja só em destaques pontuais. */
 :root {
-  --cor-primaria: 24 24 27;
+  --cor-primaria: 21 128 61;         /* #15803d */
+  --cor-primaria-hover: 22 101 52;   /* #166534 */
   --cor-primaria-contraste: 255 255 255;
-  --cor-fundo: 250 250 250;
+  --cor-destaque: 249 115 22;        /* #f97316 */
+  --cor-destaque-hover: 234 88 12;   /* #ea580c */
+  --cor-fundo: 255 255 255;
   --cor-superficie: 255 255 255;
-  --cor-texto: 24 24 27;
-  --cor-suave: 113 113 122;
-  --cor-borda: 228 228 231;
-  --cor-sucesso: 22 163 74;
+  --cor-texto: 15 23 42;             /* #0f172a */
+  --cor-suave: 75 81 95;             /* #0f172a a 75% sobre branco */
+  --cor-borda: 226 232 240;
+  --cor-sucesso: 21 128 61;
   --cor-alerta: 217 119 6;
   --cor-perigo: 220 38 38;
   --cor-info: 37 99 235;
@@ -22,7 +25,11 @@
 
 body {
   @apply bg-fundo text-texto antialiased;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+h1, h2, h3 {
+  @apply font-bold;
 }
 
 @layer utilities {

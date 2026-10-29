@@ -79,11 +79,11 @@
         [:div.mt-4.space-y-2
          (when (= "confirmed" etapa)
            [:a {:href (rfe/href :pagar {:id id})
-                :class "block rounded-xl bg-primaria px-4 py-3 text-center font-semibold text-primaria-contraste"}
+                :class "block rounded-xl bg-destaque px-4 py-3 text-center font-bold text-white hover:bg-destaque-hover"}
             "Pagar " (c/preco (:total_centavos reserva))])
          (when (pode-avaliar? reserva)
            [:a {:href (rfe/href :avaliar {:id id})
-                :class "block rounded-xl bg-primaria px-4 py-3 text-center font-semibold text-primaria-contraste"}
+                :class "block rounded-xl bg-primaria px-4 py-3 text-center font-semibold text-primaria-contraste hover:bg-primaria-hover"}
             "Avaliar"])
          (when (#{"pending" "confirmed"} status)
            [c/botao {:variante :perigo
@@ -117,7 +117,7 @@
            [:div.grid.grid-cols-2.gap-2
             [c/campo "Validade" {:default-value "12/30" :required true}]
             [c/campo "CVV" {:default-value "123" :inputmode "numeric" :required true}]]
-           [c/botao {:type "submit" :disabled enviando?}
+           [c/botao {:type "submit" :variante :destaque :disabled enviando?}
             (if enviando? "Processando..." (str "Pagar " (c/preco total_centavos)))]])]))])
 
 (defn- bloco-nota [titulo nota]

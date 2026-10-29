@@ -50,7 +50,7 @@
             choque               (when completo? (conflito ocupados inicio fim))
             n                    (when completo? (c/diarias inicio fim))]
         [:div {:class "rounded-2xl border border-borda bg-superficie p-4 md:sticky md:top-20"}
-         [:p [:span.text-2xl.font-bold (c/preco diaria_centavos)] [:span.text-suave " / dia"]]
+         [:p [:span.text-2xl.font-bold.text-destaque (c/preco diaria_centavos)] [:span.text-suave " / dia"]]
          (cond
            (= owner_id (:id user))
            [:p.mt-3.text-suave "Esta bike é sua. "
@@ -73,7 +73,8 @@
                 [:span (c/preco (* n diaria_centavos))]]
                [:div.flex.justify-between.text-base.font-semibold
                 [:span "Total"] [:span (c/preco (* n diaria_centavos))]]])
-            [c/botao {:disabled (or (not completo?) choque enviando?)
+            [c/botao {:variante :destaque
+                      :disabled (or (not completo?) choque enviando?)
                       :on-click #(rf/dispatch [:reservar {:listing_id id :inicio inicio :fim fim}])}
              (if enviando? "Enviando..." "Solicitar reserva")]
             [:p.text-center.text-xs.text-suave "Você só paga depois que o dono confirmar."]])]))))

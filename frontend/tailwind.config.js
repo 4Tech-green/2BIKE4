@@ -12,7 +12,10 @@ module.exports = {
     extend: {
       colors: {
         primaria: cor('primaria'),
+        'primaria-hover': cor('primaria-hover'),
         'primaria-contraste': cor('primaria-contraste'),
+        destaque: cor('destaque'),
+        'destaque-hover': cor('destaque-hover'),
         fundo: cor('fundo'),
         superficie: cor('superficie'),
         texto: cor('texto'),

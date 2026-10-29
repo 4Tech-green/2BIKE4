@@ -16,7 +16,8 @@
     (fn []
       [:div
        [:section.pt-2.pb-6
-        [:h1 {:class "text-3xl font-bold leading-tight md:text-4xl"} "Alugue a bike certa, perto de você"]
+        [:p {:class "mb-2 text-xs font-semibold uppercase tracking-widest text-primaria"} "Encontre · Alugue · Pedale"]
+        [:h1 {:class "text-3xl font-extrabold leading-tight md:text-4xl"} "Alugue a bike certa, perto de você"]
         [:p.mt-2.text-suave "Descreva o que você precisa e a gente encontra."]]
        [c/campo-busca {:valor @texto :ao-mudar #(reset! texto %) :ao-buscar buscar-texto! :sugestoes? true}]
 

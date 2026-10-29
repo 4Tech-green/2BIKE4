@@ -20,7 +20,7 @@
   (let [pontos (com-posicao bikes)]
     (doseq [b pontos]
       (-> (L/circleMarker #js [(:lat b) (:lng b)]
-                          #js {:radius 10 :weight 2 :color "#fff" :fillColor "#18181b" :fillOpacity 0.9})
+                          #js {:radius 10 :weight 2 :color "#fff" :fillColor "#15803d" :fillOpacity 0.9})
           (.bindPopup (popup b))
           (.addTo camada)))
     (if (seq pontos)
@@ -38,7 +38,7 @@
                       (.setLatLng marcador #js [lat lng])
                       (swap! estado assoc :marcador
                              (-> (L/circleMarker #js [lat lng]
-                                                 #js {:radius 10 :weight 2 :color "#fff" :fillColor "#18181b" :fillOpacity 0.9})
+                                                 #js {:radius 10 :weight 2 :color "#fff" :fillColor "#15803d" :fillOpacity 0.9})
                                  (.addTo mapa))))
                     (when centralizar? (.setView mapa #js [lat lng] (max 14 (.getZoom mapa)))))
                   e)]

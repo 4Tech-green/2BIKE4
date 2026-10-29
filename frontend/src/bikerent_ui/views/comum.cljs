@@ -49,16 +49,18 @@
 ;; ---------------------------------------------------------------- básicos
 
 (defn botao
-  "variante: :primario (padrão), :secundario ou :perigo."
+  "variante: :primario (padrão), :destaque, :secundario ou :perigo."
   [{:keys [variante class] :as attrs} & filhos]
   (into [:button
          (-> attrs
              (dissoc :variante)
              (assoc :class (str "w-full rounded-xl px-4 py-3 font-semibold transition disabled:opacity-50 "
                                 (case variante
-                                  :secundario "border border-borda bg-superficie text-texto hover:bg-fundo"
+                                  :secundario "border border-borda bg-superficie text-texto hover:border-primaria"
                                   :perigo     "border border-perigo text-perigo hover:bg-perigo/10"
-                                  "bg-primaria text-primaria-contraste hover:opacity-90")
+                                  ;; laranja: só o CTA principal da tela, em negrito (contraste)
+                                  :destaque   "bg-destaque font-bold text-white hover:bg-destaque-hover"
+                                  "bg-primaria text-primaria-contraste hover:bg-primaria-hover")
                                 " " class)))]
         filhos))
 
@@ -112,20 +114,21 @@
    (for [i (range 1 6)]
      ^{:key i}
      [(if ao-escolher :button :span)
-      (cond-> {:class (if (<= i (js/Math.round (or nota 0))) "text-alerta" "text-borda")}
+      (cond-> {:class (if (<= i (js/Math.round (or nota 0))) "text-destaque" "text-borda")}
         ao-escolher (assoc :type "button" :on-click #(ao-escolher i) :aria-label (str i " estrelas")))
       "★"])])
 
 (defn nota-resumo [{:keys [nota_media total_avaliacoes]}]
   (if (pos? total_avaliacoes)
     [:span.flex.items-center.gap-1.text-sm
-     [:span.text-alerta "★"] [:span.font-medium nota_media] [:span.text-suave (str "(" total_avaliacoes ")")]]
+     [:span.text-destaque "★"] [:span.font-medium (.toFixed nota_media 1)] [:span.text-suave (str "(" total_avaliacoes ")")]]
     [:span.text-sm.text-suave "Nova"]))
 
 (defn foto-bike [{:keys [foto titulo]} classe]
   (if foto
     [:img {:src foto :alt titulo :class (str "object-cover " classe)}]
-    [:div {:class (str "flex items-center justify-center bg-borda/60 text-4xl " classe)} "🚲"]))
+    [:div {:class (str "flex items-center justify-center bg-primaria/5 " classe)}
+     [:img {:src "brand/icone-pin.svg" :alt "" :class "h-1/3 max-h-16 w-auto"}]]))
 
 (defn card-bike [{:keys [id titulo cidade tipo diaria_centavos] :as bike}]
   [:a {:href  (rfe/href :bike {:id id})
@@ -136,7 +139,7 @@
      [:h3.truncate.font-semibold titulo]
      [nota-resumo bike]]
     [:p.text-sm.text-suave (str cidade " · " (tipo-nome tipo))]
-    [:p.mt-1 [:span.font-semibold (preco diaria_centavos)] [:span.text-sm.text-suave " / dia"]]]])
+    [:p.mt-1 [:span.font-bold.text-destaque (preco diaria_centavos)] [:span.text-sm.text-suave " / dia"]]]])
 
 (defn grade-bikes [bikes]
   [:div {:class "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"}
@@ -169,7 +172,7 @@
              :on-change   #(ao-mudar (.. % -target -value))
              :placeholder "O que você procura? Ex.: bike para trilha"
              :class       "min-w-0 flex-1 rounded-xl border border-borda bg-superficie px-4 py-3 outline-none focus:border-primaria"}]
-    [:button {:type "submit" :class "rounded-xl bg-primaria px-4 font-semibold text-primaria-contraste"} "Buscar"]]
+    [:button {:type "submit" :class "rounded-xl bg-primaria px-4 font-semibold text-primaria-contraste hover:bg-primaria-hover"} "Buscar"]]
    (when sugestoes?
      [:div.mt-3.flex.flex-wrap.gap-2
       (for [s sugestoes]
@@ -190,13 +193,26 @@
                                 "bg-primaria text-primaria-contraste"))}
       texto]]))
 
+(defn- icone
+  "Ícones de traço (24×24) que herdam a cor do texto."
+  [& formas]
+  (into [:svg {:viewBox "0 0 24 24" :fill "none" :stroke "currentColor" :stroke-width 2
+               :stroke-linecap "round" :stroke-linejoin "round" :class "h-6 w-6" :aria-hidden true}]
+        formas))
+
 (def ^:private itens-menu
   ;; [rota texto ícone rotas-que-acendem-o-item]
-  [[:inicio "Início" "⌂" #{:inicio}]
-   [:busca "Buscar" "⌕" #{:busca :bike}]
-   [:reservas "Reservas" "▦" #{:reservas :reserva :pagar :avaliar}]
-   [:meus-anuncios "Minhas bikes" "🚲" #{:meus-anuncios :novo-anuncio :editar-anuncio :pedidos :ganhos}]
-   [:perfil "Perfil" "◉" #{:perfil}]])
+  [[:inicio "Início" (icone [:path {:d "M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"}])
+    #{:inicio}]
+   [:busca "Buscar" (icone [:circle {:cx 11 :cy 11 :r 7}] [:path {:d "m20 20-4-4"}])
+    #{:busca :bike}]
+   [:reservas "Reservas" (icone [:rect {:x 3 :y 4 :width 18 :height 17 :rx 2}] [:path {:d "M16 2v4M8 2v4M3 10h18"}])
+    #{:reservas :reserva :pagar :avaliar}]
+   [:meus-anuncios "Minhas bikes" (icone [:circle {:cx 5.5 :cy 17 :r 3.5}] [:circle {:cx 18.5 :cy 17 :r 3.5}]
+                                         [:path {:d "M5.5 17 9 9h6l3.5 8M9 9 7.5 5.5H6M12 17l3-8"}])
+    #{:meus-anuncios :novo-anuncio :editar-anuncio :pedidos :ganhos}]
+   [:perfil "Perfil" (icone [:circle {:cx 12 :cy 8 :r 4}] [:path {:d "M4 21a8 8 0 0 1 16 0"}])
+    #{:perfil}]])
 
 (defn barra-navegacao
   "Barra de navegação inferior (celular)."
@@ -207,19 +223,20 @@
       ^{:key nome}
       [:li
        [:a {:href  (rfe/href nome)
-            :class (str "flex flex-col items-center px-2 py-2 text-xs "
+            :class (str "flex flex-col items-center gap-1 px-2 py-2 text-xs "
                         (if (ativo atual) "font-semibold text-primaria" "text-suave"))}
-        [:span.text-xl icone] texto]])]])
+        icone texto]])]])
 
 (defn cabecalho
   "Topo com a marca; no desktop também leva o menu."
   [atual]
   [:header {:class "sticky top-0 z-[1000] border-b border-borda bg-superficie/90 backdrop-blur"}
-   [:div {:class "mx-auto flex max-w-5xl items-center justify-between px-4 py-3"}
-    [:a {:href (rfe/href :inicio) :class "text-xl font-extrabold tracking-tight"} "2Bike4"]
+   [:div {:class "mx-auto flex max-w-5xl items-center justify-between px-4 py-2"}
+    [:a {:href (rfe/href :inicio) :aria-label "2bike4, início"}
+     [:img {:src "brand/logo-sem-slogan.svg" :alt "2bike4" :class "h-10 w-auto md:h-12"}]]
     [:nav {:class "hidden gap-6 md:flex"}
      (for [[nome texto _ ativo] itens-menu]
        ^{:key nome}
        [:a {:href  (rfe/href nome)
-            :class (if (ativo atual) "font-semibold" "text-suave hover:text-texto")}
+            :class (if (ativo atual) "font-semibold text-primaria" "text-suave hover:text-primaria")}
         texto])]]])
