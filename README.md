@@ -45,9 +45,10 @@ reutilizáveis (card de bike, badge de status, estrelas...) em `views/comum.cljs
 As cores são variáveis CSS em `src/css/main.css`: a identidade visual atual é
 provisória e muda só ali.
 
-Fotos: com `CLOUDINARY_CLOUD` e `CLOUDINARY_PRESET` (um upload preset "unsigned")
-definidas no build, o dono envia a foto do celular/computador direto para o
-Cloudinary. Sem elas, a tela pede o link de uma imagem já publicada.
+Fotos: o dono envia a foto do celular/computador direto para o Cloudinary
+(conta `xcmfxt9w`, upload preset unsigned `2bike4_fotos`, padrões em
+`shadow-cljs.edn`; outra conta = variáveis `CLOUDINARY_CLOUD` e `CLOUDINARY_PRESET`
+no build). Com os dois vazios, a tela pede o link de uma imagem já publicada.
 
 ## Dados de demonstração
 
