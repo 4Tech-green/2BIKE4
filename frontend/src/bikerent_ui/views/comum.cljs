@@ -259,7 +259,8 @@
   [:header {:class "sticky top-0 z-[1000] border-b border-borda bg-superficie/90 backdrop-blur"}
    [:div {:class "mx-auto flex max-w-5xl items-center justify-between px-4 py-2"}
     [:a {:href (rfe/href :inicio) :aria-label "2bike4, início"}
-     [:img {:src "brand/logo-sem-slogan.svg" :alt "2bike4" :class "h-10 w-auto md:h-12"}]]
+     [:img {:src "brand/logo-sem-slogan.svg" :alt "2bike4" ;; o arquivo tem bastante respiro em volta: 64 px no desktop dão ~19 px ao texto
+     :class "h-12 w-auto md:h-16"}]]
     [:nav {:class "hidden gap-6 md:flex"}
      (for [[nome texto _ ativo] itens-menu]
        ^{:key nome}

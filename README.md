@@ -55,6 +55,8 @@ no build). Com os dois vazios, a tela pede o link de uma imagem já publicada.
 `DATABASE_URL=... clojure -M:seed` (em `backend/`) apaga e recria 12 pessoas,
 45 bikes em 11 capitais, cerca de 100 reservas e 200 avaliações. Pode rodar
 quantas vezes quiser; só mexe nas contas `@2bike4.test`. Senha de todas: `demo1234`.
+As fotos (`backend/dev/fotos.edn`) são do Wikimedia Commons, com autores e
+licenças em [CREDITOS-FOTOS.md](CREDITOS-FOTOS.md); as speeds ficam sem foto.
 
 - `ana@2bike4.test`: dona das bikes de Recife/Olinda, com pedidos para confirmar
 - `bruno@2bike4.test`: locatário, com uma reserva em cada estado (pagar, avaliar...)

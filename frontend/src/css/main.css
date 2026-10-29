@@ -66,11 +66,13 @@ h1, h2, h3 {
 
 /* Mapa da home: a tela toda entre o cabeçalho e a barra de navegação. */
 .altura-mapa {
-  height: calc(100dvh - 57px - 62px - env(safe-area-inset-bottom));
+  /* cabeçalho: logo 48px + 16px de padding + 1px de borda */
+  height: calc(100dvh - 65px - 62px - env(safe-area-inset-bottom));
 }
 @media (min-width: 768px) {
   .altura-mapa {
-    height: calc(100dvh - 65px);
+    /* logo 64px + 16px + 1px */
+    height: calc(100dvh - 81px);
   }
 }
 

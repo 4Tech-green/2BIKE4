@@ -8,6 +8,8 @@
             [bikerent.search.logic :as search]
             [bikerent.system :as system]
             [buddy.hashers :as hashers]
+            [clojure.edn :as edn]
+            [clojure.java.io :as io]
             [clojure.string :as str]
             [integrant.core :as ig])
   (:import (java.time LocalDate)
@@ -92,8 +94,13 @@
             [(first (str/split nome #" "))
              (:id (inserir! ds :users {:nome nome :email (email nome) :senha_hash hash}))]))))
 
+(def ^:private fotos
+  "tipo → URLs de fotos (dev/fotos.edn; créditos em CREDITOS-FOTOS.md)."
+  (edn/read-string (slurp (io/resource "fotos.edn"))))
+
 (defn- criar-bikes!
-  "Ana tem as bikes de Recife e Olinda; Bruno só aluga; os outros dividem o resto."
+  "Ana tem as bikes de Recife e Olinda; Bruno só aluga; os outros dividem o resto.
+  Cada bike ganha uma foto do seu tipo, quando houver."
   [ds ids]
   (let [donos (vec (vals (dissoc ids "Ana" "Bruno")))]
     (vec
@@ -103,17 +110,20 @@
                  [titulo aro tamanho diaria descricao] (sorteio (modelos tipo))
                  dono (if (#{"Recife" "Olinda"} cidade)
                         (if (< i 4) (ids "Ana") (sorteio donos))
-                        (sorteio donos))]]
-       (inserir! ds :listings (cond-> {:owner_id        dono
-                                       :titulo          (if (= 700 aro) titulo (str titulo " aro " aro))
-                                       :descricao       descricao
-                                       :tipo            tipo
-                                       :diaria_centavos (* 100 (+ diaria (entre -5 10)))
-                                       :cidade          cidade
-                                       :lat             (perto lat)
-                                       :lng             (perto lng)}
-                                (not= 700 aro) (assoc :aro aro)
-                                tamanho        (assoc :tamanho tamanho)))))))
+                        (sorteio donos))
+                 bike (inserir! ds :listings (cond-> {:owner_id        dono
+                                                      :titulo          (if (= 700 aro) titulo (str titulo " aro " aro))
+                                                      :descricao       descricao
+                                                      :tipo            tipo
+                                                      :diaria_centavos (* 100 (+ diaria (entre -5 10)))
+                                                      :cidade          cidade
+                                                      :lat             (perto lat)
+                                                      :lng             (perto lng)}
+                                               (not= 700 aro) (assoc :aro aro)
+                                               tamanho        (assoc :tamanho tamanho)))]]
+       (do (when-let [opcoes (seq (fotos tipo))]
+             (inserir! ds :listing_photos {:listing_id (:id bike) :url (sorteio opcoes) :ordem 0}))
+           bike)))))
 
 (defn- reservar!
   "Insere a reserva direto no banco (o seed precisa de datas no passado) e,
