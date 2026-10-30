@@ -69,3 +69,21 @@ as telas na mesma URL. No Render: *New → Blueprint*, escolher este repositóri
 branch `main` do Neon. As migrações rodam ao subir; depois, rodar o seed
 apontando para o mesmo banco. No plano gratuito o serviço dorme após 15 minutos
 sem acesso e leva cerca de 1 minuto para acordar.
+
+## Apps (PWA, desktop e Android)
+
+Os três abrem o app publicado (`https://twobike4-ym4q.onrender.com`), então
+toda mudança no site já aparece neles sem gerar o app de novo.
+
+- **PWA:** no celular, abrir o site no Chrome e tocar em *Adicionar à tela inicial*
+  (ou *Instalar app*). Arquivos: `frontend/public/manifest.webmanifest` e `sw.js`.
+- **Desktop (Windows):** `cd desktop && npm install && npm run dist` gera
+  `desktop/dist/2bike4-<versão>.exe`, portátil (não precisa instalar).
+  `npm start` abre sem empacotar.
+- **Android:** projeto Capacitor em `mobile/`. Com o Android Studio instalado:
+  `cd mobile && npm install && npx cap open android` e, no Android Studio,
+  *Build → Build App Bundle(s) / APK(s) → Build APK(s)*.
+  Ícones gerados do `mobile/assets/icon.png` com `npm run icones`.
+
+Os ícones de app (`frontend/public/brand/app-icone*`) são o pin oficial da marca
+centralizado num quadrado branco.

@@ -1,0 +1,12 @@
+{
+  "appId": "app.twobike4.mobile",
+  "appName": "2bike4",
+  "webDir": "www",
+  "server": {
+    "url": "https://twobike4-ym4q.onrender.com",
+    "cleartext": false
+  },
+  "android": {
+    "backgroundColor": "#ffffff"
+  }
+}

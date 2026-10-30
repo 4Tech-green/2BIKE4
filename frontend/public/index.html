@@ -7,7 +7,8 @@
   <title>2bike4 · Encontre, alugue, pedale</title>
   <link rel="icon" type="image/svg+xml" href="brand/icone-pin.svg">
   <link rel="icon" type="image/png" sizes="64x64" href="brand/favicon-64.png">
-  <link rel="apple-touch-icon" href="brand/icone-512.png">
+  <link rel="apple-touch-icon" href="brand/app-icone-512.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
@@ -16,5 +17,11 @@
 <body>
   <div id="app"></div>
   <script src="js/main.js"></script>
+  <script>
+    // PWA: só no site servido por http(s); no Electron/Capacitor não faz falta
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http') && location.hostname !== 'localhost') {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>

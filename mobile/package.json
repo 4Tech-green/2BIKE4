@@ -1,0 +1,21 @@
+{
+  "name": "2bike4-mobile",
+  "private": true,
+  "description": "2bike4 para Android (Capacitor): abre o app publicado",
+  "scripts": {
+    "sync": "cap sync android",
+    "icones": "capacitor-assets generate --android --iconBackgroundColor #ffffff --splashBackgroundColor #ffffff",
+    "abrir": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "7.0.0",
+    "@capacitor/core": "7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "7.0.0"
+  },
+  "allowScripts": {
+    "sharp@0.32.6": true
+  }
+}
