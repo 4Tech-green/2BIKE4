@@ -24,4 +24,9 @@
    ["/me"
     {:login? true
      :get    {:handler (fn [{:keys [identity]}]
-                         {:status 200 :body (logic/me deps (:id identity))})}}]])
+                         {:status 200 :body (logic/me deps (:id identity))})}
+     :put    {:parameters {:body [:map
+                                  [:nome {:optional true} [:string {:min 2 :max 100}]]
+                                  [:foto_url {:optional true} [:maybe [:re #"^https://.+"]]]]}
+              :handler    (fn [{:keys [identity] {:keys [body]} :parameters}]
+                            {:status 200 :body (logic/update-me! deps (:id identity) body)})}}]])

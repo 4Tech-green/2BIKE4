@@ -24,3 +24,13 @@
 (defn me [{:keys [users]} user-id]
   (or (some-> (ports/find-by-id users user-id) domain/public)
       (errors/error! :not-found "Usuário não encontrado")))
+
+(defn update-me!
+  "Muda o nome e/ou a foto (URL; nil remove a foto)."
+  [{:keys [users] :as deps} user-id changes]
+  (let [changes (cond-> (select-keys changes [:nome :foto_url])
+                  (:nome changes) (update :nome str/trim))]
+    (if (seq changes)
+      (or (some-> (ports/update! users user-id changes) domain/public)
+          (errors/error! :not-found "Usuário não encontrado"))
+      (me deps user-id))))

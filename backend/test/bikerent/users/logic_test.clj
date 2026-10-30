@@ -14,7 +14,10 @@
       (find-by-email [_ email]
         (first (filter #(= email (:email %)) (vals @db))))
       (find-by-id [_ id]
-        (dissoc (get @db id) :senha_hash)))))
+        (dissoc (get @db id) :senha_hash))
+      (update! [_ id changes]
+        (when (get @db id)
+          (dissoc (get (swap! db update id merge changes) id) :senha_hash))))))
 
 (defn- tipo-do-erro [f]
   (try (f) nil (catch clojure.lang.ExceptionInfo e (errors/error-type e))))
@@ -31,3 +34,17 @@
     (testing "senha errada ou e-mail desconhecido"
       (is (= :unauthorized (tipo-do-erro #(logic/login deps {:email "ana@x.com" :senha "errada"}))))
       (is (= :unauthorized (tipo-do-erro #(logic/login deps {:email "nao@x.com" :senha "segredo1"})))))))
+
+(deftest atualizar-perfil
+  (let [deps {:users (repo-em-memoria)}
+        {:keys [id]} (logic/register! deps {:nome "Ana" :email "ana@x.com" :senha "segredo1"})]
+    (testing "foto e nome novos"
+      (is (= {:nome "Ana Souza" :foto_url "https://fotos/ana.jpg"}
+             (select-keys (logic/update-me! deps id {:nome " Ana Souza " :foto_url "https://fotos/ana.jpg"})
+                          [:nome :foto_url]))))
+    (testing "nil remove a foto; campos fora do perfil são ignorados"
+      (let [user (logic/update-me! deps id {:foto_url nil :papel "admin"})]
+        (is (nil? (:foto_url user)))
+        (is (= "user" (:papel user)))))
+    (testing "conta inexistente"
+      (is (= :not-found (tipo-do-erro #(logic/update-me! deps 99 {:nome "X"})))))))
