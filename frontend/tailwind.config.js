@@ -4,7 +4,7 @@ const cor = (nome) => `rgb(var(--cor-${nome}) / <alpha-value>)`;
 
 module.exports = {
   content: {
-    files: ['./src/**/*.cljs', './public/index.html'],
+    files: ['./src/**/*.cljs', './public/index.html', './public/design-kit.html'],
     // Hiccup escreve classes como :div.p-3.text-sm; separar também no ponto.
     extract: { cljs: (conteudo) => conteudo.split(/[\s"'.(){}#,]+/) },
   },

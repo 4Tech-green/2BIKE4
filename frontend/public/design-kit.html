@@ -1,0 +1,206 @@
+<!doctype html>
+<!-- Kit de design do 2bike4 (desktop, 1440 px): os componentes das telas com o
+     CSS real do app, numa página só, para importar no Figma (html.to.design)
+     como página de Fundamentos. Ao mudar um componente no app, atualize aqui. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1440">
+  <title>2bike4 · Kit de design</title>
+  <link rel="icon" type="image/svg+xml" href="brand/icone-pin.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<main class="mx-auto max-w-6xl space-y-16 px-10 py-12">
+
+  <header class="flex items-end justify-between border-b border-borda pb-8">
+    <img src="brand/logo-fundo-branco.svg" alt="2bike4" class="h-28 w-auto">
+    <div class="text-right">
+      <h1 class="text-4xl font-extrabold">Kit de design</h1>
+      <p class="text-suave">Fundamentos e componentes · versão desktop (1440 px)</p>
+    </div>
+  </header>
+
+  <!-- Cores -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Cores</h2>
+    <div class="grid grid-cols-5 gap-4">
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-primaria"></div><div class="p-3"><p class="font-semibold">Verde natureza</p><p class="text-sm text-suave">#15803d · primária</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-primaria-hover"></div><div class="p-3"><p class="font-semibold">Verde escuro</p><p class="text-sm text-suave">#166534 · hover</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-destaque"></div><div class="p-3"><p class="font-semibold">Laranja</p><p class="text-sm text-suave">#f97316 · destaque</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-texto"></div><div class="p-3"><p class="font-semibold">Azul-noite</p><p class="text-sm text-suave">#0f172a · texto</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-suave"></div><div class="p-3"><p class="font-semibold">Texto secundário</p><p class="text-sm text-suave">#0f172a a 75%</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-fundo"></div><div class="p-3"><p class="font-semibold">Branco</p><p class="text-sm text-suave">#ffffff · fundo</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-borda"></div><div class="p-3"><p class="font-semibold">Borda</p><p class="text-sm text-suave">#e2e8f0</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-alerta"></div><div class="p-3"><p class="font-semibold">Alerta</p><p class="text-sm text-suave">#d97706 · aguardando</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-info"></div><div class="p-3"><p class="font-semibold">Informação</p><p class="text-sm text-suave">#2563eb · confirmada</p></div></div>
+      <div class="overflow-hidden rounded-2xl border border-borda"><div class="h-24 bg-perigo"></div><div class="p-3"><p class="font-semibold">Perigo</p><p class="text-sm text-suave">#dc2626 · erro, cancelar</p></div></div>
+    </div>
+    <p class="text-sm text-suave">Regra da marca: verde é a cor dominante; laranja só em preços, estrelas e um botão principal por tela.</p>
+  </section>
+
+  <!-- Tipografia -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Tipografia · Poppins</h2>
+    <div class="space-y-3 rounded-2xl border border-borda p-6">
+      <p class="text-4xl font-extrabold">Título da home · 36 / 800</p>
+      <p class="text-2xl font-bold">Título de página · 24 / 700</p>
+      <p class="text-lg font-semibold">Título de seção · 18 / 600</p>
+      <p class="font-semibold">Nome em card · 16 / 600</p>
+      <p>Texto · 16 / 400</p>
+      <p class="text-sm text-suave">Texto secundário · 14 / 400</p>
+      <p class="text-xs font-semibold uppercase tracking-widest text-primaria">Encontre · Alugue · Pedale · 12 / 600</p>
+    </div>
+  </section>
+
+  <!-- Botões -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Botões</h2>
+    <div class="grid grid-cols-5 gap-4">
+      <button class="w-full rounded-xl bg-primaria px-4 py-3 font-semibold text-primaria-contraste">Primário</button>
+      <button class="w-full rounded-xl bg-destaque px-4 py-3 font-bold text-white">Destaque (CTA)</button>
+      <button class="w-full rounded-xl border border-borda bg-superficie px-4 py-3 font-semibold text-texto">Secundário</button>
+      <button class="w-full rounded-xl border border-perigo px-4 py-3 font-semibold text-perigo">Perigo</button>
+      <button class="w-full rounded-xl bg-primaria px-4 py-3 font-semibold text-primaria-contraste opacity-50">Desabilitado</button>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="rounded-full bg-superficie px-4 py-2 text-sm font-semibold text-primaria shadow-md">◎ Perto de mim</span>
+      <span class="rounded-full border border-borda bg-superficie px-3 py-1 text-sm">bike para trilha</span>
+      <span class="rounded-xl border border-borda bg-superficie px-4 py-2 text-sm font-medium">Mountain</span>
+      <span class="rounded-full border border-primaria px-4 py-2 text-sm font-semibold text-primaria">Entrar</span>
+    </div>
+  </section>
+
+  <!-- Campos -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Campos</h2>
+    <div class="grid grid-cols-3 gap-4">
+      <label class="block"><span class="mb-1 block text-sm font-medium">E-mail</span><input class="w-full rounded-xl border border-borda bg-superficie px-3 py-3" value="bruno@2bike4.test"></label>
+      <label class="block"><span class="mb-1 block text-sm font-medium">Tipo</span><select class="w-full rounded-xl border border-borda bg-superficie px-3 py-3"><option>Mountain</option></select></label>
+      <div class="grid grid-cols-2 gap-2">
+        <label class="block"><span class="mb-1 block text-sm font-medium">Retirada</span><input class="w-full rounded-xl border border-borda bg-superficie px-3 py-3" value="20/12/2026"></label>
+        <label class="block"><span class="mb-1 block text-sm font-medium">Devolução</span><input class="w-full rounded-xl border border-primaria bg-superficie px-3 py-3" value="22/12/2026"></label>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <p class="text-sm font-medium">Campo de busca com sugestões</p>
+      <div class="flex gap-2">
+        <input class="min-w-0 flex-1 rounded-xl border border-borda bg-superficie px-4 py-3" placeholder="O que você procura? Ex.: bike para trilha">
+        <button class="rounded-xl bg-primaria px-4 font-semibold text-primaria-contraste">Buscar</button>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <span class="rounded-full border border-borda bg-superficie px-3 py-1 text-sm">bike para trilha</span>
+        <span class="rounded-full border border-borda bg-superficie px-3 py-1 text-sm">elétrica para ir ao trabalho</span>
+        <span class="rounded-full border border-borda bg-superficie px-3 py-1 text-sm">dobrável para levar no metrô</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card de bike -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Card de bike</h2>
+    <div class="grid grid-cols-3 gap-4">
+      <a class="block overflow-hidden rounded-2xl border border-borda bg-superficie">
+        <img src="https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283858/gq2urjrqv52xt7elymma.jpg" alt="Mountain bike" class="aspect-[4/3] w-full object-cover">
+        <div class="p-3">
+          <div class="flex items-start justify-between gap-2"><h3 class="truncate font-semibold">Caloi Elite Carbon aro 29</h3><span class="flex items-center gap-1 text-sm"><span class="text-destaque">★</span><span class="font-medium">4.8</span><span class="text-suave">(4)</span></span></div>
+          <p class="text-sm text-suave">2,3 km · Recife · Mountain</p>
+          <p class="mt-1"><span class="font-bold text-destaque">R$ 60,00</span><span class="text-sm text-suave"> / dia</span></p>
+        </div>
+      </a>
+      <a class="block overflow-hidden rounded-2xl border border-borda bg-superficie">
+        <img src="https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283863/x8d0gjmxwq5xg8nobbu7.jpg" alt="Bike dobrável" class="aspect-[4/3] w-full object-cover">
+        <div class="p-3">
+          <div class="flex items-start justify-between gap-2"><h3 class="truncate font-semibold">Dahon Mu D9 aro 20</h3><span class="text-sm text-suave">Nova</span></div>
+          <p class="text-sm text-suave">Rio de Janeiro · Dobrável</p>
+          <p class="mt-1"><span class="font-bold text-destaque">R$ 50,00</span><span class="text-sm text-suave"> / dia</span></p>
+        </div>
+      </a>
+      <a class="block overflow-hidden rounded-2xl border border-borda bg-superficie">
+        <div class="flex aspect-[4/3] w-full items-center justify-center bg-primaria/5"><img src="brand/icone-pin.svg" alt="" class="h-16 w-auto"></div>
+        <div class="p-3">
+          <div class="flex items-start justify-between gap-2"><h3 class="truncate font-semibold">Specialized Allez</h3><span class="flex items-center gap-1 text-sm"><span class="text-destaque">★</span><span class="font-medium">5.0</span><span class="text-suave">(2)</span></span></div>
+          <p class="text-sm text-suave">Curitiba · Speed</p>
+          <p class="mt-1"><span class="font-bold text-destaque">R$ 74,00</span><span class="text-sm text-suave"> / dia</span></p>
+        </div>
+      </a>
+    </div>
+    <p class="text-sm text-suave">Sem foto, o card mostra o pin da marca sobre um verde bem claro.</p>
+  </section>
+
+  <!-- Mapa: etiquetas e carrossel -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Mapa: etiqueta de preço e card do carrossel</h2>
+    <div class="flex items-end gap-10 rounded-2xl border border-borda bg-primaria/5 px-10 pb-8 pt-16">
+      <div class="relative h-10 w-24"><div class="pin-preco" style="position:absolute;left:50%;top:100%">R$ 45</div></div>
+      <div class="relative h-10 w-24"><div class="pin-preco pin-preco-ativo" style="position:absolute;left:50%;top:100%">R$ 82</div></div>
+      <span class="inline-block h-4 w-4 rounded-full border-2 border-white bg-info shadow"></span>
+      <span class="text-sm text-suave">etiqueta · selecionada · você está aqui</span>
+    </div>
+    <div class="flex gap-3">
+      <a class="flex w-72 shrink-0 gap-3 rounded-2xl border-2 border-transparent bg-superficie p-2 shadow-lg">
+        <img src="https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283860/x1tkb3k8iwudry9flq1r.jpg" alt="" class="h-20 w-20 shrink-0 rounded-xl object-cover">
+        <div class="min-w-0 flex-1 py-1"><p class="truncate font-semibold">Caloi Urbam aro 26</p><p class="truncate text-sm text-suave">9,3 km · Rio de Janeiro</p><div class="mt-1 flex items-center justify-between gap-2"><span><span class="font-bold text-destaque">R$ 25,00</span><span class="text-xs text-suave"> /dia</span></span><span class="flex items-center gap-1 text-sm"><span class="text-destaque">★</span><span class="font-medium">5.0</span></span></div></div>
+      </a>
+      <a class="flex w-72 shrink-0 gap-3 rounded-2xl border-2 border-destaque bg-superficie p-2 shadow-lg">
+        <img src="https://res.cloudinary.com/xcmfxt9w/image/upload/v1793283858/gq2urjrqv52xt7elymma.jpg" alt="" class="h-20 w-20 shrink-0 rounded-xl object-cover">
+        <div class="min-w-0 flex-1 py-1"><p class="truncate font-semibold">Oggi Big Wheel aro 29</p><p class="truncate text-sm text-suave">9,9 km · Rio de Janeiro</p><div class="mt-1 flex items-center justify-between gap-2"><span><span class="font-bold text-destaque">R$ 65,00</span><span class="text-xs text-suave"> /dia</span></span><span class="text-sm text-suave">Nova</span></div></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Status, estrelas, avatar -->
+  <section class="grid grid-cols-3 gap-8">
+    <div class="space-y-3">
+      <h2 class="text-2xl font-bold">Badge de status</h2>
+      <div class="flex flex-wrap gap-2">
+        <span class="inline-block rounded-full bg-alerta/10 px-3 py-1 text-xs font-semibold text-alerta">Aguardando o dono</span>
+        <span class="inline-block rounded-full bg-info/10 px-3 py-1 text-xs font-semibold text-info">Confirmada</span>
+        <span class="inline-block rounded-full bg-sucesso/10 px-3 py-1 text-xs font-semibold text-sucesso">Paga</span>
+        <span class="inline-block rounded-full bg-borda px-3 py-1 text-xs font-semibold text-texto">Concluída</span>
+        <span class="inline-block rounded-full bg-perigo/10 px-3 py-1 text-xs font-semibold text-perigo">Recusada</span>
+        <span class="inline-block rounded-full bg-borda px-3 py-1 text-xs font-semibold text-suave">Cancelada</span>
+        <span class="rounded-full bg-sucesso/10 px-3 py-1 text-xs font-semibold text-sucesso">Publicado</span>
+        <span class="rounded-full bg-borda px-3 py-1 text-xs font-semibold text-suave">Pausado</span>
+      </div>
+    </div>
+    <div class="space-y-3">
+      <h2 class="text-2xl font-bold">Estrelas</h2>
+      <div class="flex text-sm"><span class="text-destaque">★</span><span class="text-destaque">★</span><span class="text-destaque">★</span><span class="text-destaque">★</span><span class="text-borda">★</span></div>
+      <div class="flex gap-1 text-3xl"><span class="text-destaque">★</span><span class="text-destaque">★</span><span class="text-destaque">★</span><span class="text-borda">★</span><span class="text-borda">★</span></div>
+      <span class="flex items-center gap-1 text-sm"><span class="text-destaque">★</span><span class="font-medium">4.8</span><span class="text-suave">(12)</span></span>
+    </div>
+    <div class="space-y-3">
+      <h2 class="text-2xl font-bold">Avatar</h2>
+      <div class="flex items-center gap-4">
+        <span class="flex h-20 w-20 items-center justify-center rounded-full bg-primaria text-3xl font-bold text-primaria-contraste">B</span>
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primaria text-lg font-bold text-primaria-contraste">A</span>
+        <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primaria text-lg font-bold text-primaria-contraste ring-2 ring-destaque ring-offset-2">A</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navegação e avisos -->
+  <section class="space-y-4">
+    <h2 class="text-2xl font-bold">Cabeçalho, abas e avisos</h2>
+    <div class="rounded-2xl border border-borda">
+      <div class="flex items-center justify-between px-6 py-2">
+        <img src="brand/logo-sem-slogan.svg" alt="2bike4" class="h-16 w-auto">
+        <nav class="flex gap-6"><a class="font-semibold text-primaria">Início</a><a class="text-suave">Buscar</a><a class="text-suave">Reservas</a><a class="text-suave">Minhas bikes</a><a class="text-suave">Perfil</a></nav>
+      </div>
+    </div>
+    <div class="flex max-w-xl gap-1 rounded-xl border border-borda bg-superficie p-1 text-sm">
+      <a class="flex-1 rounded-lg bg-primaria px-3 py-2 text-center font-medium text-primaria-contraste">Anúncios</a>
+      <a class="flex-1 rounded-lg px-3 py-2 text-center font-medium text-suave">Pedidos</a>
+      <a class="flex-1 rounded-lg px-3 py-2 text-center font-medium text-suave">Ganhos</a>
+    </div>
+    <div class="flex gap-3">
+      <span class="rounded-xl bg-sucesso px-4 py-3 text-sm font-medium text-white shadow-lg">Pagamento aprovado!</span>
+      <span class="rounded-xl bg-perigo px-4 py-3 text-sm font-medium text-white shadow-lg">As datas escolhidas não estão disponíveis</span>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
