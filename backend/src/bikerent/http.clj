@@ -79,6 +79,13 @@
                 (bookings/routes deps)
                 (search/routes deps))))
 
+(defn- sem-cache
+  "Arquivos do frontend: o navegador sempre confere com o servidor (responde
+  304 se nada mudou). Sem isso, celulares guardavam o JS antigo após o deploy."
+  [handler]
+  (fn [req]
+    (some-> (handler req) (assoc-in [:headers "Cache-Control"] "no-cache"))))
+
 (defn handler [{:keys [jwt-secret] :as deps}]
   (-> (ring/ring-handler
        (ring/router
@@ -96,7 +103,7 @@
                              coercion/coerce-request-middleware]}})
        (ring/routes
         ;; no deploy o frontend compilado vem em resources/public (ver Dockerfile)
-        (ring/create-resource-handler {:path "/"})
+        (sem-cache (ring/create-resource-handler {:path "/"}))
         (ring/create-default-handler
          {:not-found          (constantly (json-response 404 :not-found "Rota não encontrada"))
           :method-not-allowed (constantly (json-response 405 :method-not-allowed "Método não permitido"))})))
