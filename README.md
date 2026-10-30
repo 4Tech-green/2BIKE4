@@ -76,7 +76,7 @@ Os três abrem o app publicado (`https://twobike4-ym4q.onrender.com`), então
 toda mudança no site já aparece neles sem gerar o app de novo.
 
 - **PWA:** no celular, abrir o site no Chrome e tocar em *Adicionar à tela inicial*
-  (ou *Instalar app*). Arquivos: `frontend/public/manifest.webmanifest` e `sw.js`.
+  (ou *Instalar app*). Arquivos: `frontend/public/manifest.json` e `sw.js`.
 - **Desktop (Windows):** `cd desktop && npm install && npm run dist` gera
   `desktop/dist/2bike4-<versão>.exe`, portátil (não precisa instalar).
   `npm start` abre sem empacotar.
