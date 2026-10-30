@@ -286,10 +286,66 @@
 (rf/reg-event-fx
  :salvar-anuncio
  (fn [_ [_ id dados]]
-   {:dispatch [:enviar (if id
-                         {:method :put :path (str "/listings/" id) :body dados}
-                         {:method :post :path "/listings" :body dados})
-               [:anuncio-salvo (if id "Alterações salvas" "Bike anunciada! Agora adicione fotos.")]]}))
+   {:dispatch (if id
+                [:enviar {:method :put :path (str "/listings/" id) :body dados}
+                 [:anuncio-salvo "Alterações salvas"]]
+                [:enviar {:method :post :path "/listings" :body dados}
+                 [:anuncio-criado]])}))
+
+;; Fotos escolhidas no formulário de anunciar: sobem para o Cloudinary na hora
+;; e são anexadas à bike assim que ela é criada.
+
+(rf/reg-event-db
+ :limpar-rascunho
+ (fn [db _] (dissoc db :rascunho-fotos :fotos-enviando)))
+
+(rf/reg-event-fx
+ :enviar-foto-rascunho
+ (fn [{:keys [db]} [_ arquivo]]
+   {:db                (update db :fotos-enviando (fnil inc 0))
+    :upload-cloudinary {:arquivo arquivo
+                        :on-ok   [:foto-rascunho-pronta]
+                        :on-erro [:foto-rascunho-falhou]}}))
+
+(rf/reg-event-db
+ :foto-rascunho-pronta
+ (fn [db [_ url]]
+   (-> db
+       (update :rascunho-fotos (fnil conj []) url)
+       (update :fotos-enviando dec))))
+
+(rf/reg-event-fx
+ :foto-rascunho-falhou
+ (fn [{:keys [db]} _]
+   {:db       (update db :fotos-enviando dec)
+    :dispatch [:avisar :erro "Não foi possível enviar uma das fotos"]}))
+
+(rf/reg-event-db
+ :adicionar-foto-rascunho
+ (fn [db [_ url]]
+   (update db :rascunho-fotos (fnil conj []) url)))
+
+(rf/reg-event-db
+ :remover-foto-rascunho
+ (fn [db [_ url]]
+   (update db :rascunho-fotos #(vec (remove #{url} %)))))
+
+(rf/reg-event-fx
+ :anuncio-criado
+ (fn [{:keys [db]} [_ anuncio]]
+   {:db       (-> db (assoc-in [:dados :anuncio] anuncio) (dissoc :rascunho-fotos))
+    :dispatch [:anexar-fotos (:id anuncio) (:rascunho-fotos db)]}))
+
+(rf/reg-event-fx
+ :anexar-fotos
+ ;; uma de cada vez, para manter a ordem escolhida
+ (fn [_ [_ id urls]]
+   (if-let [url (first urls)]
+     {:dispatch [:enviar {:method :post :path (str "/listings/" id "/photos") :body {:url url}}
+                 [:anexar-fotos id (rest urls)]]}
+     {:navegar [:editar-anuncio {:id id}]
+      :fx      [[:dispatch [:carregar :anuncio {:path (str "/listings/" id)}]]
+                [:dispatch [:avisar :sucesso "Bike anunciada!"]]]})))
 
 (rf/reg-event-fx
  :anuncio-salvo

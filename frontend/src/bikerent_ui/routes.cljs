@@ -39,7 +39,10 @@
    ;; proprietário
    ["/anuncios"   {:name :meus-anuncios :login? true :carregar meus-anuncios}]
    ;; "novo" também casa com :id; :conflicting faz testar na ordem
-   ["/anuncios/novo" {:name :novo-anuncio :login? true :conflicting true}]
+   ["/anuncios/novo" {:name        :novo-anuncio
+                      :login?      true
+                      :conflicting true
+                      :carregar    (fn [_] [[:limpar-rascunho]])}]
    ["/anuncios/:id"  {:name        :editar-anuncio
                       :conflicting true
                       :login?      true

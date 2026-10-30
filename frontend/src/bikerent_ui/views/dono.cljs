@@ -83,10 +83,64 @@
                          #(rf/dispatch [:avisar :erro "Não foi possível obter sua localização"]))
     (rf/dispatch [:avisar :erro "Seu navegador não informa a localização"])))
 
+(defn- grade-fotos
+  "Miniaturas com um × para remover. `fotos`: [[chave url ao-remover] ...]."
+  [fotos]
+  (when (seq fotos)
+    [:div {:class "mb-3 grid grid-cols-3 gap-2"}
+     (for [[chave url ao-remover] fotos]
+       ^{:key chave}
+       [:div.relative
+        [:img {:src url :alt "" :class "aspect-square w-full rounded-xl object-cover"}]
+        [:button {:type       "button"
+                  :on-click   ao-remover
+                  :class      "absolute right-1 top-1 h-7 w-7 rounded-full bg-black/60 text-white"
+                  :aria-label "Remover foto"}
+         "×"]])]))
+
+(defn- escolher-fotos
+  "Área de toque que abre a galeria/câmera; aceita várias fotos de uma vez."
+  [enviando ao-escolher]
+  [:label {:class "block cursor-pointer rounded-xl border-2 border-dashed border-borda p-4 text-center text-suave hover:border-primaria"}
+   (if (pos? enviando) (str "Enviando " enviando " foto(s)...") "+ Adicionar fotos")
+   [:input {:type      "file"
+            :accept    "image/*"
+            :multiple  true
+            :class     "hidden"
+            :on-change (fn [e]
+                         (doseq [arquivo (array-seq (.. e -target -files))]
+                           (ao-escolher arquivo))
+                         (set! (.. e -target -value) ""))}]])
+
+(defn- fotos-do-rascunho
+  "Fotos escolhidas antes de a bike existir; são anexadas ao publicar."
+  []
+  (let [url (r/atom "")]
+    (fn []
+      (let [fotos    @(rf/subscribe [:rascunho-fotos])
+            enviando @(rf/subscribe [:fotos-enviando])]
+        [:div
+         [:span.mb-1.block.text-sm.font-medium "Fotos"]
+         [grade-fotos (for [u fotos] [u u #(rf/dispatch [:remover-foto-rascunho u])])]
+         (if (config/upload-de-fotos?)
+           [escolher-fotos enviando #(rf/dispatch [:enviar-foto-rascunho %])]
+           [:div.flex.gap-2
+            [:input {:type        "url"
+                     :value       @url
+                     :on-change   #(reset! url (.. % -target -value))
+                     :placeholder "Cole o link de uma foto (https://...)"
+                     :class       "min-w-0 flex-1 rounded-xl border border-borda bg-superficie px-3 py-3"}]
+            [:button {:type     "button"
+                      :class    "rounded-xl bg-primaria px-4 font-semibold text-primaria-contraste"
+                      :on-click #(when-not (str/blank? @url)
+                                   (rf/dispatch [:adicionar-foto-rascunho (str/trim @url)])
+                                   (reset! url ""))}
+             "Adicionar"]])]))))
+
 (defn- form-anuncio [anuncio]
   (let [form (r/atom (do-anuncio anuncio))]
     (fn [anuncio]
-      (let [enviando? @(rf/subscribe [:enviando?])
+      (let [enviando? (or @(rf/subscribe [:enviando?]) (pos? @(rf/subscribe [:fotos-enviando])))
             campo     (fn [k] {:value (get @form k) :on-change #(swap! form assoc k (.. % -target -value))})
             selecao   (fn [rotulo k opcoes]
                         [:label.block
@@ -97,6 +151,9 @@
          {:on-submit (fn [e]
                        (.preventDefault e)
                        (rf/dispatch [:salvar-anuncio (:id anuncio) (para-api @form)]))}
+         ;; na edição as fotos têm seção própria, abaixo do formulário
+         (when-not (:id anuncio)
+           [fotos-do-rascunho])
          [c/campo "Título" (merge {:required true :min-length 3 :max-length 120
                                    :placeholder "Ex.: Caloi Elite aro 29"} (campo :titulo))]
          [:div.grid.grid-cols-2.gap-3
@@ -128,27 +185,10 @@
     (fn [{:keys [id fotos]}]
       (let [enviando? @(rf/subscribe [:enviando?])]
         [:div
-         (when (seq fotos)
-           [:div {:class "mb-3 grid grid-cols-3 gap-2"}
-            (for [{foto-id :id foto-url :url} fotos]
-              ^{:key foto-id}
-              [:div.relative
-               [:img {:src foto-url :alt "" :class "aspect-square w-full rounded-xl object-cover"}]
-               [:button {:type     "button"
-                         :on-click #(rf/dispatch [:remover-foto id foto-id])
-                         :class    "absolute right-1 top-1 h-7 w-7 rounded-full bg-black/60 text-white"
-                         :aria-label "Remover foto"}
-                "×"]])])
+         [grade-fotos (for [{foto-id :id foto-url :url} fotos]
+                        [foto-id foto-url #(rf/dispatch [:remover-foto id foto-id])])]
          (if (config/upload-de-fotos?)
-           [:label {:class "block cursor-pointer rounded-xl border-2 border-dashed border-borda p-4 text-center text-suave"}
-            (if enviando? "Enviando..." "+ Adicionar foto")
-            [:input {:type      "file"
-                     :accept    "image/*"
-                     :class     "hidden"
-                     :disabled  enviando?
-                     :on-change #(when-let [arquivo (aget (.. % -target -files) 0)]
-                                   (rf/dispatch [:enviar-foto id arquivo])
-                                   (set! (.. % -target -value) ""))}]]
+           [escolher-fotos (if enviando? 1 0) #(rf/dispatch [:enviar-foto id %])]
            [:form.flex.gap-2
             {:on-submit (fn [e]
                           (.preventDefault e)
