@@ -237,6 +237,33 @@
     :dispatch      [:avisar :sucesso (str "Olá, " (:nome user) "!")]}))
 
 (rf/reg-event-fx
+ :enviar-foto-perfil
+ (fn [{:keys [db]} [_ arquivo]]
+   {:db                (update db :fotos-enviando (fnil inc 0))
+    :upload-cloudinary {:arquivo arquivo
+                        :on-ok   [:foto-perfil-enviada]
+                        :on-erro [:foto-rascunho-falhou]}}))
+
+(rf/reg-event-fx
+ :foto-perfil-enviada
+ (fn [{:keys [db]} [_ url]]
+   {:db       (update db :fotos-enviando dec)
+    :dispatch [:atualizar-perfil {:foto_url url}]}))
+
+(rf/reg-event-fx
+ :atualizar-perfil
+ (fn [_ [_ mudancas]]
+   {:dispatch [:enviar {:method :put :path "/me" :body mudancas} [:perfil-atualizado]]}))
+
+(rf/reg-event-fx
+ :perfil-atualizado
+ ;; a sessão guarda o usuário: atualiza para o avatar do cabeçalho mudar na hora
+ (fn [{:keys [db]} [_ user]]
+   {:db            (-> db (assoc :user user) (assoc-in [:dados :perfil] user))
+    :salvar-sessao {:token (:token db) :user user}
+    :dispatch      [:avisar :sucesso "Perfil atualizado"]}))
+
+(rf/reg-event-fx
  :sair
  (fn [{:keys [db]} _]
    {:db            (dissoc db :token :user :dados)

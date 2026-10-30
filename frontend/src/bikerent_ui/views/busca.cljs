@@ -33,7 +33,8 @@
      [c/nota-resumo bike]]]])
 
 (defn- carrossel [bikes selecionada]
-  [:div {:class "flex snap-x snap-mandatory gap-3 overflow-x-auto px-3 pb-3"}
+  ;; arrastar o carrossel só move os cards, nunca a página
+  [:div {:class "flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-3 pb-3"}
    (for [b bikes]
      ^{:key (:id b)} [cartao-mini b (= selecionada (:id b))])])
 
@@ -55,7 +56,7 @@
             bikes        (c/com-distancia (or dados []) local)
             perto        (if local (filter #(<= (:distancia %) raio-km) bikes) bikes)
             onde         (cond (nil? local) "" (:nome local) (str " perto de " (:nome local)) :else " perto de você")]
-        [:div {:class "altura-mapa relative"}
+        [:div {:class "tela-mapa"}
          [mapa/mapa-explorar {:bikes         bikes
                               :local         local
                               :selecionada   selecionada

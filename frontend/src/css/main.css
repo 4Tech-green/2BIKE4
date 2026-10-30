@@ -64,15 +64,21 @@ h1, h2, h3 {
   border-top-color: rgb(var(--cor-destaque));
 }
 
-/* Mapa da home: a tela toda entre o cabeçalho e a barra de navegação. */
-.altura-mapa {
-  /* cabeçalho: logo 48px + 16px de padding + 1px de borda */
-  height: calc(100dvh - 65px - 62px - env(safe-area-inset-bottom));
+/* Mapa da home: preso à tela entre o cabeçalho e a barra de navegação, para
+   a página nunca rolar (no celular, arrastar o carrossel rolava a página e
+   escondia a busca). */
+.tela-mapa {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 65px;     /* cabeçalho: logo 48px + 16px de padding + 1px de borda */
+  bottom: calc(61px + env(safe-area-inset-bottom)); /* barra de navegação */
+  overscroll-behavior: none;
 }
 @media (min-width: 768px) {
-  .altura-mapa {
-    /* logo 64px + 16px + 1px */
-    height: calc(100dvh - 81px);
+  .tela-mapa {
+    top: 81px;   /* logo 64px + 16px + 1px */
+    bottom: 0;   /* no desktop não há barra embaixo */
   }
 }
 

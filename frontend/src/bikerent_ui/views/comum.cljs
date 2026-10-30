@@ -133,6 +133,14 @@
 
 ;; ---------------------------------------------------------------- componentes do Figma
 
+(defn avatar
+  "Foto redonda da pessoa; sem foto, a inicial do nome sobre o verde da marca."
+  [{:keys [nome foto_url]} classe]
+  (if foto_url
+    [:img {:src foto_url :alt nome :class (str "rounded-full object-cover " classe)}]
+    [:span {:class (str "flex items-center justify-center rounded-full bg-primaria font-bold text-primaria-contraste " classe)}
+     (str/upper-case (subs (str/trim (or nome "?")) 0 1))]))
+
 (defn estrelas
   "Estrelas de avaliação. Com `:ao-escolher` vira um seletor."
   [{:keys [nota ao-escolher tamanho]}]
@@ -266,4 +274,11 @@
        ^{:key nome}
        [:a {:href  (rfe/href nome)
             :class (if (ativo atual) "font-semibold text-primaria" "text-suave hover:text-primaria")}
-        texto])]]])
+        texto])]
+    ;; celular: a foto leva ao perfil, como num site comum (no desktop o menu já tem "Perfil")
+    (if-let [user @(rf/subscribe [:user])]
+      [:a {:href (rfe/href :perfil) :aria-label "Meu perfil" :class "md:hidden"}
+       [avatar user (str "h-10 w-10 text-lg " (when (= atual :perfil) "ring-2 ring-destaque ring-offset-2"))]]
+      [:a {:href  (rfe/href :entrar)
+           :class "rounded-full border border-primaria px-4 py-2 text-sm font-semibold text-primaria md:hidden"}
+       "Entrar"])]])
