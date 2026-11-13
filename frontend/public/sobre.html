@@ -9,6 +9,11 @@
   <title>2bike4 · Conectando pessoas por meio do aluguel de bicicletas</title>
   <meta name="description" content="2bike4: plataforma de aluguel de bicicletas entre pessoas. Projeto da Usina de Projetos Experimentais IV — ADS Facens 2026.">
   <link rel="icon" type="image/svg+xml" href="brand/icone-pin.svg">
+  <link rel="icon" type="image/png" sizes="64x64" href="brand/favicon-64.png">
+  <!-- o site abre nesta página: sem o manifest daqui, "instalar app" vira um
+       atalho com o favicon esticado em vez do ícone do app -->
+  <link rel="apple-touch-icon" href="brand/app-icone-512.png">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
@@ -460,6 +465,12 @@
     document.querySelectorAll('.surge').forEach((el) => obs.observe(el));
   } else {
     document.querySelectorAll('.surge').forEach((el) => el.classList.add('visivel'));
+  }
+</script>
+<script>
+  // PWA: mesmo registro do index.html (é aqui que o celular instala o app)
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http') && location.hostname !== 'localhost') {
+    navigator.serviceWorker.register('sw.js');
   }
 </script>
 </body>
