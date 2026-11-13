@@ -1,0 +1,113 @@
+﻿reserva,mes,data,dono,bike,tipo,cidade,diarias,situacao,pago,receita_centavos,nota_da_bike
+217,"2026-07",2026-07-02,"Ana Souza","Specialized Allez","Speed","Recife",3,"Concluída","Sim",22500,5
+218,"2026-07",2026-07-07,"Ana Souza","Sense Activ aro 29","Hibrida","Recife",4,"Concluída","Sim",14400,3
+219,"2026-07",2026-07-28,"Ana Souza","Sense Activ aro 29","Hibrida","Recife",3,"Concluída","Sim",10800,5
+220,"2026-08",2026-08-06,"Ana Souza","Sense Activ aro 29","Hibrida","Recife",2,"Concluída","Sim",7200,5
+221,"2026-07",2026-07-20,"Ana Souza","Groove Hype 50 aro 29","Hibrida","Recife",2,"Concluída","Sim",8400,5
+222,"2026-08",2026-08-08,"Ana Souza","Groove Hype 50 aro 29","Hibrida","Recife",1,"Concluída","Sim",4200,4
+223,"2026-08",2026-08-26,"Ana Souza","Groove Hype 50 aro 29","Hibrida","Recife",4,"Cancelada","Não",0,
+224,"2026-09",2026-09-24,"Ana Souza","Groove Hype 50 aro 29","Hibrida","Recife",3,"Concluída","Sim",12600,5
+225,"2026-06",2026-06-27,"Ana Souza","Houston Foxer aro 26","Urbana","Recife",1,"Concluída","Sim",2700,4
+226,"2026-07",2026-07-20,"Ana Souza","Houston Foxer aro 26","Urbana","Recife",2,"Concluída","Sim",5400,5
+227,"2026-06",2026-06-14,"Diego Rocha","Groove Infantil aro 20","Infantil","Recife",4,"Concluída","Sim",11200,3
+228,"2026-06",2026-06-27,"Diego Rocha","Groove Infantil aro 20","Infantil","Recife",3,"Cancelada","Não",0,
+229,"2026-07",2026-07-08,"João Santos","Sense Activ aro 29","Hibrida","Recife",2,"Concluída","Sim",9600,4
+230,"2026-07",2026-07-16,"João Santos","Sense Activ aro 29","Hibrida","Recife",2,"Concluída","Sim",9600,5
+231,"2026-08",2026-08-08,"João Santos","Sense Activ aro 29","Hibrida","Recife",3,"Cancelada","Não",0,
+232,"2026-07",2026-07-04,"Ana Souza","Specialized Allez","Speed","Olinda",1,"Concluída","Sim",7200,4
+233,"2026-07",2026-07-28,"Ana Souza","Specialized Allez","Speed","Olinda",4,"Concluída","Sim",28800,5
+234,"2026-08",2026-08-11,"Ana Souza","Specialized Allez","Speed","Olinda",4,"Concluída","Sim",28800,5
+235,"2026-08",2026-08-21,"Ana Souza","Specialized Allez","Speed","Olinda",4,"Concluída","Sim",28800,5
+236,"2026-07",2026-07-20,"Ana Souza","Houston Foxer aro 26","Urbana","Olinda",4,"Concluída","Sim",6400,5
+237,"2026-08",2026-08-01,"Ana Souza","Houston Foxer aro 26","Urbana","Olinda",2,"Concluída","Sim",3200,3
+238,"2026-07",2026-07-07,"Isabela Freitas","Trek Domane AL 2","Speed","São Paulo",1,"Cancelada","Não",0,
+239,"2026-08",2026-08-01,"Isabela Freitas","Trek Domane AL 2","Speed","São Paulo",1,"Concluída","Sim",7200,5
+240,"2026-08",2026-08-14,"Isabela Freitas","Trek Domane AL 2","Speed","São Paulo",1,"Concluída","Sim",7200,3
+241,"2026-07",2026-07-15,"Felipe Costa","Monark Barra Circular aro 26","Urbana","São Paulo",1,"Concluída","Sim",1800,5
+242,"2026-07",2026-07-26,"Felipe Costa","Monark Barra Circular aro 26","Urbana","São Paulo",1,"Concluída","Sim",1800,4
+243,"2026-06",2026-06-21,"João Santos","Caloi Strada","Speed","São Paulo",1,"Concluída","Sim",5000,5
+244,"2026-07",2026-07-01,"João Santos","Caloi Strada","Speed","São Paulo",3,"Concluída","Sim",15000,5
+245,"2026-07",2026-07-26,"João Santos","Caloi Strada","Speed","São Paulo",1,"Concluída","Sim",5000,4
+246,"2026-08",2026-08-19,"João Santos","Caloi Strada","Speed","São Paulo",2,"Concluída","Sim",10000,5
+247,"2026-07",2026-07-01,"Diego Rocha","Groove Infantil aro 20","Infantil","São Paulo",4,"Concluída","Sim",8000,5
+248,"2026-07",2026-07-26,"Diego Rocha","Groove Infantil aro 20","Infantil","São Paulo",3,"Concluída","Sim",6000,5
+249,"2026-07",2026-07-18,"Isabela Freitas","Sense Impulse aro 29","Eletrica","São Paulo",4,"Concluída","Sim",35600,5
+250,"2026-07",2026-07-28,"Isabela Freitas","Sense Impulse aro 29","Eletrica","São Paulo",3,"Concluída","Sim",26700,5
+251,"2026-08",2026-08-10,"Isabela Freitas","Sense Impulse aro 29","Eletrica","São Paulo",3,"Cancelada","Não",0,
+252,"2026-06",2026-06-19,"Henrique Alves","Dahon Mu D9 aro 20","Dobravel","Rio de Janeiro",2,"Concluída","Sim",10000,4
+253,"2026-07",2026-07-16,"Henrique Alves","Dahon Mu D9 aro 20","Dobravel","Rio de Janeiro",4,"Concluída","Sim",20000,4
+254,"2026-08",2026-08-12,"Henrique Alves","Dahon Mu D9 aro 20","Dobravel","Rio de Janeiro",4,"Cancelada","Não",0,
+255,"2026-09",2026-09-03,"Henrique Alves","Dahon Mu D9 aro 20","Dobravel","Rio de Janeiro",1,"Concluída","Sim",5000,3
+256,"2026-07",2026-07-03,"Marcos Vieira","Lev E-Bike T800 aro 26","Eletrica","Rio de Janeiro",4,"Concluída","Sim",32800,5
+257,"2026-07",2026-07-22,"Marcos Vieira","Lev E-Bike T800 aro 26","Eletrica","Rio de Janeiro",2,"Concluída","Sim",16400,5
+258,"2026-07",2026-07-08,"Isabela Freitas","Caloi Urbam aro 26","Urbana","Rio de Janeiro",1,"Concluída","Sim",2500,5
+259,"2026-07",2026-07-12,"Isabela Freitas","Trek Marlin 7 aro 29","Mountain","Belo Horizonte",3,"Concluída","Sim",22200,3
+260,"2026-07",2026-07-30,"Isabela Freitas","Trek Marlin 7 aro 29","Mountain","Belo Horizonte",1,"Concluída","Sim",7400,3
+261,"2026-08",2026-08-24,"Isabela Freitas","Trek Marlin 7 aro 29","Mountain","Belo Horizonte",1,"Concluída","Sim",7400,4
+262,"2026-06",2026-06-17,"Larissa Gomes","Caloi Elite Carbon aro 29","Mountain","Belo Horizonte",3,"Concluída","Sim",18900,5
+263,"2026-07",2026-07-15,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Belo Horizonte",4,"Concluída","Sim",36400,4
+264,"2026-08",2026-08-07,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Belo Horizonte",3,"Concluída","Sim",27300,4
+265,"2026-08",2026-08-24,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Belo Horizonte",3,"Concluída","Sim",27300,3
+266,"2026-07",2026-07-08,"Diego Rocha","Sense Activ aro 29","Hibrida","Belo Horizonte",4,"Concluída","Sim",17600,4
+267,"2026-08",2026-08-02,"Diego Rocha","Sense Activ aro 29","Hibrida","Belo Horizonte",2,"Concluída","Sim",8800,5
+268,"2026-08",2026-08-20,"Diego Rocha","Sense Activ aro 29","Hibrida","Belo Horizonte",2,"Concluída","Sim",8800,5
+269,"2026-08",2026-08-30,"Diego Rocha","Sense Activ aro 29","Hibrida","Belo Horizonte",1,"Concluída","Sim",4400,5
+270,"2026-06",2026-06-19,"Larissa Gomes","Groove Infantil aro 20","Infantil","Curitiba",4,"Concluída","Sim",6400,4
+271,"2026-07",2026-07-07,"Larissa Gomes","Groove Infantil aro 20","Infantil","Curitiba",3,"Concluída","Sim",4800,5
+272,"2026-08",2026-08-01,"Larissa Gomes","Groove Infantil aro 20","Infantil","Curitiba",2,"Concluída","Sim",3200,5
+273,"2026-08",2026-08-09,"Larissa Gomes","Groove Infantil aro 20","Infantil","Curitiba",1,"Cancelada","Não",0,
+274,"2026-06",2026-06-27,"Gabriela Nunes","Caloi Strada","Speed","Curitiba",1,"Cancelada","Não",0,
+275,"2026-06",2026-06-26,"Felipe Costa","Specialized Allez","Speed","Curitiba",2,"Concluída","Sim",14800,5
+276,"2026-07",2026-07-14,"Felipe Costa","Specialized Allez","Speed","Curitiba",3,"Cancelada","Não",0,
+277,"2026-08",2026-08-11,"Felipe Costa","Specialized Allez","Speed","Curitiba",4,"Concluída","Sim",29600,5
+278,"2026-07",2026-07-20,"Diego Rocha","Specialized Allez","Speed","Porto Alegre",3,"Concluída","Sim",24000,5
+279,"2026-08",2026-08-15,"Diego Rocha","Specialized Allez","Speed","Porto Alegre",4,"Cancelada","Não",0,
+280,"2026-07",2026-07-13,"Diego Rocha","Sense Activ aro 29","Hibrida","Porto Alegre",1,"Concluída","Sim",4800,5
+281,"2026-07",2026-07-19,"Diego Rocha","Sense Activ aro 29","Hibrida","Porto Alegre",1,"Concluída","Sim",4800,4
+282,"2026-07",2026-07-15,"Elisa Ramos","Lev E-Bike T800 aro 26","Eletrica","Porto Alegre",2,"Concluída","Sim",15400,5
+283,"2026-07",2026-07-29,"Elisa Ramos","Lev E-Bike T800 aro 26","Eletrica","Porto Alegre",1,"Concluída","Sim",7700,3
+284,"2026-08",2026-08-18,"Elisa Ramos","Lev E-Bike T800 aro 26","Eletrica","Porto Alegre",3,"Concluída","Sim",23100,3
+285,"2026-06",2026-06-28,"João Santos","Monark Barra Circular aro 26","Urbana","Salvador",4,"Concluída","Sim",10000,4
+286,"2026-07",2026-07-13,"João Santos","Monark Barra Circular aro 26","Urbana","Salvador",3,"Cancelada","Não",0,
+287,"2026-07",2026-07-31,"João Santos","Monark Barra Circular aro 26","Urbana","Salvador",2,"Concluída","Sim",5000,3
+288,"2026-08",2026-08-18,"João Santos","Monark Barra Circular aro 26","Urbana","Salvador",1,"Concluída","Sim",2500,5
+289,"2026-07",2026-07-16,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",3,"Concluída","Sim",26400,5
+290,"2026-07",2026-07-31,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",1,"Cancelada","Não",0,
+291,"2026-08",2026-08-10,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",3,"Concluída","Sim",26400,5
+292,"2026-09",2026-09-05,"Isabela Freitas","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",1,"Concluída","Sim",8800,4
+293,"2026-06",2026-06-18,"Marcos Vieira","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",4,"Concluída","Sim",38000,5
+294,"2026-07",2026-07-11,"Marcos Vieira","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",4,"Concluída","Sim",38000,3
+295,"2026-07",2026-07-21,"Marcos Vieira","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",4,"Cancelada","Não",0,
+296,"2026-08",2026-08-16,"Marcos Vieira","Caloi E-Vibe Easy Rider aro 26","Eletrica","Salvador",1,"Concluída","Sim",9500,5
+297,"2026-06",2026-06-21,"Henrique Alves","Trek Domane AL 2","Speed","Fortaleza",3,"Concluída","Sim",21300,4
+298,"2026-07",2026-07-08,"Henrique Alves","Trek Domane AL 2","Speed","Fortaleza",4,"Concluída","Sim",28400,5
+299,"2026-07",2026-07-27,"Henrique Alves","Trek Domane AL 2","Speed","Fortaleza",3,"Concluída","Sim",21300,5
+300,"2026-08",2026-08-17,"Henrique Alves","Trek Domane AL 2","Speed","Fortaleza",2,"Concluída","Sim",14200,4
+301,"2026-06",2026-06-26,"Felipe Costa","Trek FX 2","Hibrida","Fortaleza",1,"Concluída","Sim",5500,5
+302,"2026-07",2026-07-17,"Felipe Costa","Trek FX 2","Hibrida","Fortaleza",1,"Concluída","Sim",5500,4
+303,"2026-07",2026-07-29,"Felipe Costa","Trek FX 2","Hibrida","Fortaleza",4,"Concluída","Sim",22000,5
+304,"2026-08",2026-08-24,"Felipe Costa","Trek FX 2","Hibrida","Fortaleza",2,"Concluída","Sim",11000,5
+305,"2026-06",2026-06-12,"Larissa Gomes","Sense Impact Pro aro 29","Mountain","Florianópolis",3,"Concluída","Sim",22800,5
+306,"2026-07",2026-07-03,"Larissa Gomes","Sense Impact Pro aro 29","Mountain","Florianópolis",3,"Concluída","Sim",22800,5
+307,"2026-07",2026-07-24,"Larissa Gomes","Sense Impact Pro aro 29","Mountain","Florianópolis",2,"Concluída","Sim",15200,5
+308,"2026-06",2026-06-26,"Isabela Freitas","Lev E-Bike T800 aro 26","Eletrica","Florianópolis",4,"Concluída","Sim",33600,4
+309,"2026-07",2026-07-18,"Isabela Freitas","Lev E-Bike T800 aro 26","Eletrica","Florianópolis",2,"Concluída","Sim",16800,5
+310,"2026-08",2026-08-10,"Isabela Freitas","Lev E-Bike T800 aro 26","Eletrica","Florianópolis",4,"Concluída","Sim",33600,5
+311,"2026-08",2026-08-28,"Isabela Freitas","Lev E-Bike T800 aro 26","Eletrica","Florianópolis",3,"Concluída","Sim",25200,4
+312,"2026-06",2026-06-28,"Elisa Ramos","Sense Impulse aro 29","Eletrica","Florianópolis",1,"Concluída","Sim",9400,4
+313,"2026-07",2026-07-19,"Elisa Ramos","Sense Impulse aro 29","Eletrica","Florianópolis",2,"Concluída","Sim",18800,5
+314,"2026-08",2026-08-10,"Elisa Ramos","Sense Impulse aro 29","Eletrica","Florianópolis",3,"Concluída","Sim",28200,3
+315,"2026-06",2026-06-15,"Felipe Costa","Caloi Urbam aro 26","Urbana","Brasília",3,"Concluída","Sim",9900,4
+316,"2026-07",2026-07-04,"Felipe Costa","Caloi Urbam aro 26","Urbana","Brasília",2,"Concluída","Sim",6600,5
+317,"2026-07",2026-07-11,"Felipe Costa","Caloi Urbam aro 26","Urbana","Brasília",1,"Concluída","Sim",3300,5
+318,"2026-06",2026-06-12,"Carla Mendes","Caloi E-Vibe Easy Rider aro 26","Eletrica","Brasília",1,"Concluída","Sim",8500,4
+319,"2026-06",2026-06-19,"Carla Mendes","Caloi E-Vibe Easy Rider aro 26","Eletrica","Brasília",4,"Concluída","Sim",34000,5
+320,"2026-07",2026-07-13,"Carla Mendes","Caloi E-Vibe Easy Rider aro 26","Eletrica","Brasília",4,"Concluída","Sim",34000,5
+321,"2026-10",2026-10-17,"Diego Rocha","Groove Infantil aro 20","Infantil","Recife",2,"Concluída","Sim",5600,
+322,"2026-11",2026-11-03,"Larissa Gomes","Nathor Princess aro 16","Infantil","Recife",3,"Confirmada","Não",0,
+323,"2026-11",2026-11-07,"João Santos","Sense Activ aro 29","Hibrida","Recife",2,"Confirmada","Sim",9600,
+324,"2026-11",2026-11-12,"Isabela Freitas","Trek Domane AL 2","Speed","São Paulo",2,"Aguardando","Não",0,
+325,"2026-11",2026-11-05,"Ana Souza","Specialized Allez","Speed","Recife",3,"Aguardando","Não",0,
+326,"2026-11",2026-11-08,"Ana Souza","Sense Activ aro 29","Hibrida","Recife",2,"Aguardando","Não",0,
+327,"2026-11",2026-11-01,"Ana Souza","Groove Hype 50 aro 29","Hibrida","Recife",2,"Confirmada","Sim",8400,
+328,"2026-10",2026-10-23,"Ana Souza","Houston Foxer aro 26","Urbana","Recife",2,"Concluída","Sim",5400,
