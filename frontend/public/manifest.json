@@ -3,7 +3,7 @@
   "short_name": "2bike4",
   "description": "Aluguel de bicicletas entre pessoas.",
   "lang": "pt-BR",
-  "start_url": "./#/",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,7 +1,7 @@
 // Service worker do PWA: guarda as telas (HTML, JS, CSS, marca) para o app
 // abrir rápido e funcionar com conexão ruim. A API e o mapa vão sempre à rede.
-const CACHE = '2bike4-v4';
-const BASICO = ['./', 'index.html', 'css/main.css', 'js/main.js', 'manifest.json',
+const CACHE = '2bike4-v5';
+const BASICO = ['./', 'index.html', 'sobre.html', 'css/main.css', 'js/main.js', 'manifest.json',
                 'brand/logo-sem-slogan.svg', 'brand/icone-pin.svg', 'brand/app-icone-192.png'];
 
 self.addEventListener('install', (e) => {
