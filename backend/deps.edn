@@ -39,6 +39,11 @@
             :extra-deps  {integrant/repl {:mvn/version "0.3.3"}}
             :main-opts   ["-m" "seed"]}
 
+  ;; DATABASE_URL=... clojure -M:bi  (exporta CSVs para o Power BI em ../bi/dados)
+  :bi      {:extra-paths ["dev"]
+            :extra-deps  {integrant/repl {:mvn/version "0.3.3"}}
+            :main-opts   ["-m" "bi"]}
+
   ;; clojure -M:test
   :test    {:extra-paths ["test"]
             :extra-deps  {io.github.cognitect-labs/test-runner

@@ -1,0 +1,466 @@
+<!doctype html>
+<!-- Landing page de apresentação do projeto (UPX IV · ADS 2026).
+     Página única, sem dependência do app: os dois botões levam ao app (./). -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#15803d">
+  <title>2bike4 · Conectando pessoas por meio do aluguel de bicicletas</title>
+  <meta name="description" content="2bike4: plataforma de aluguel de bicicletas entre pessoas. Projeto da Usina de Projetos Experimentais IV — ADS Facens 2026.">
+  <link rel="icon" type="image/svg+xml" href="brand/icone-pin.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap">
+  <style>
+    :root {
+      --verde: #15803d;
+      --verde-hover: #166534;
+      --verde-claro: #dcfce7;
+      --verde-bem-claro: #f0fdf4;
+      --laranja: #f97316;
+      --laranja-hover: #ea580c;
+      --laranja-claro: #ffedd5;
+      --texto: #0f172a;
+      --suave: rgb(15 23 42 / 0.75);
+      --borda: #e2e8f0;
+      /* cores oficiais dos ODS da ONU */
+      --ods11: #fd9d24;
+      --ods12: #bf8b2e;
+      --ods13: #3f7e44;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #fff;
+      color: var(--texto);
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 { line-height: 1.15; margin: 0; }
+    p { margin: 0; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    section { position: relative; padding: 88px 0; }
+
+    /* ---------- botões ---------- */
+    .cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 20px 40px;
+      border-radius: 9999px;
+      background: var(--laranja);
+      color: #fff; font-size: 1.25rem; font-weight: 800; text-decoration: none;
+      box-shadow: 0 10px 0 var(--laranja-hover), 0 18px 30px rgb(249 115 22 / 0.35);
+      transition: transform .15s, box-shadow .15s, background .15s;
+    }
+    .cta:hover { background: var(--laranja-hover); transform: translateY(-3px) rotate(-1deg); }
+    .cta:active { transform: translateY(6px); box-shadow: 0 4px 0 var(--laranja-hover), 0 8px 16px rgb(249 115 22 / 0.3); }
+    .cta .seta { display: inline-block; transition: transform .2s; }
+    .cta:hover .seta { transform: translateX(6px); }
+    .rotulo {
+      display: inline-block; padding: 6px 16px; border-radius: 9999px;
+      background: var(--verde-claro); color: var(--verde);
+      font-size: .85rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    }
+    .titulo-secao { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin: 14px 0 12px; }
+    .sub { color: var(--suave); font-size: 1.1rem; max-width: 640px; }
+    .centro { text-align: center; }
+    .centro .sub { margin: 0 auto; }
+
+    /* ---------- topo ---------- */
+    .hero {
+      padding: 32px 0 0;
+      background:
+        radial-gradient(circle at 12% 20%, var(--laranja-claro) 0 90px, transparent 91px),
+        radial-gradient(circle at 92% 12%, var(--verde-claro) 0 140px, transparent 141px),
+        radial-gradient(circle at 80% 85%, #fef9c3 0 70px, transparent 71px),
+        var(--verde-bem-claro);
+      overflow: hidden;
+    }
+    .hero-topo { display: flex; justify-content: space-between; align-items: center; }
+    .hero-topo img { height: 64px; }
+    .selo-upx { font-size: .85rem; font-weight: 600; color: var(--suave); text-align: right; }
+    .hero-corpo { text-align: center; padding: 56px 0 24px; }
+    .hero h1 { font-size: clamp(2.2rem, 6.5vw, 4.4rem); font-weight: 800; letter-spacing: -.02em; }
+    .hero h1 .verde { color: var(--verde); }
+    .hero h1 .laranja { color: var(--laranja); }
+    .hero .sub { margin: 20px auto 40px; font-size: clamp(1.05rem, 2.2vw, 1.3rem); }
+    .lema { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 40px; }
+    .lema span {
+      padding: 8px 18px; border-radius: 9999px; background: #fff; font-weight: 700;
+      box-shadow: 0 4px 14px rgb(15 23 42 / 0.08);
+      animation: flutua 3s ease-in-out infinite;
+    }
+    .lema span:nth-child(2) { animation-delay: .4s; color: var(--verde); }
+    .lema span:nth-child(3) { animation-delay: .8s; color: var(--laranja); }
+    @keyframes flutua { 50% { transform: translateY(-8px); } }
+
+    /* bike passeando pela rua */
+    .rua { position: relative; height: 120px; margin-top: 24px; }
+    .rua::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 18px; height: 4px;
+      background: repeating-linear-gradient(90deg, var(--verde) 0 28px, transparent 28px 48px);
+      opacity: .35;
+    }
+    .bike {
+      position: absolute; bottom: 20px; left: -140px; width: 120px;
+      animation: pedala 11s linear infinite;
+    }
+    .bike .roda { transform-box: fill-box; transform-origin: center; animation: gira .7s linear infinite; }
+    @keyframes pedala { to { left: calc(100% + 20px); } }
+    @keyframes gira { to { transform: rotate(360deg); } }
+
+    .onda { display: block; width: 100%; height: 60px; }
+
+    /* ---------- problema ---------- */
+    .duas-col { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+    .bolha-numero {
+      position: relative; aspect-ratio: 1; max-width: 360px; margin: 0 auto;
+      border-radius: 46% 54% 52% 48% / 55% 45% 55% 45%;
+      background: var(--verde); color: #fff;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+      padding: 40px; animation: respira 6s ease-in-out infinite;
+    }
+    .bolha-numero strong { font-size: clamp(3.5rem, 9vw, 5.5rem); font-weight: 800; line-height: 1; }
+    .bolha-numero small { font-size: 1rem; opacity: .95; margin-top: 8px; }
+    .bolha-numero .fonte { font-size: .75rem; opacity: .8; margin-top: 10px; }
+    @keyframes respira { 50% { border-radius: 54% 46% 45% 55% / 45% 55% 45% 55%; } }
+
+    /* ---------- como funciona ---------- */
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .passo {
+      background: #fff; border: 2px solid var(--borda); border-radius: 28px; padding: 32px 26px;
+      transition: transform .2s, border-color .2s, box-shadow .2s;
+    }
+    .passo:hover { transform: translateY(-6px) rotate(-1deg); border-color: var(--verde); box-shadow: 0 16px 30px rgb(21 128 61 / 0.12); }
+    .passo:nth-child(2):hover { transform: translateY(-6px) rotate(1deg); }
+    .passo .icone {
+      width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center;
+      font-size: 2rem; margin-bottom: 18px; background: var(--verde-claro);
+    }
+    .passo:nth-child(2) .icone { background: var(--laranja-claro); }
+    .passo:nth-child(3) .icone { background: #fef9c3; }
+    .passo h3 { font-size: 1.35rem; margin-bottom: 8px; }
+    .passo .num { color: var(--laranja); font-weight: 800; }
+    .passo p { color: var(--suave); }
+
+    /* ---------- ODS ---------- */
+    .faixa-verde { background: var(--verde); color: #fff; }
+    .faixa-verde .rotulo { background: rgb(255 255 255 / 0.18); color: #fff; }
+    .faixa-verde .sub { color: rgb(255 255 255 / 0.9); }
+    .ods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+    .ods-card {
+      border-radius: 26px; padding: 28px; color: #fff; position: relative; overflow: hidden;
+      border: 4px solid #fff;
+      box-shadow: 0 12px 24px rgb(0 0 0 / 0.18);
+      transition: transform .2s;
+    }
+    .ods-card:hover { transform: scale(1.03) rotate(-1deg); }
+    .ods-card .n { font-size: 3.6rem; font-weight: 800; line-height: 1; }
+    .ods-card h3 { font-size: 1.15rem; margin: 8px 0 8px; }
+    .ods-card p { font-size: .95rem; opacity: .95; }
+    .ods-card .emoji { position: absolute; right: 18px; top: 14px; font-size: 2.6rem; opacity: .9; }
+
+    /* ---------- pesquisa ---------- */
+    .numeros { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+    .numero {
+      border-radius: 28px; padding: 28px 22px; text-align: center; background: var(--verde-bem-claro);
+      border: 2px dashed var(--verde-claro);
+    }
+    .numero:nth-child(even) { background: #fff7ed; border-color: var(--laranja-claro); }
+    .numero strong { display: block; font-size: clamp(2.4rem, 5vw, 3.2rem); font-weight: 800; color: var(--verde); line-height: 1.1; }
+    .numero:nth-child(even) strong { color: var(--laranja); }
+    .numero span { display: block; margin-top: 8px; color: var(--suave); font-size: .95rem; }
+    .nota-pesquisa { margin-top: 22px; color: var(--suave); font-size: .9rem; text-align: center; }
+
+    /* ---------- futuro ---------- */
+    .futuro {
+      display: flex; gap: 28px; align-items: center;
+      background: var(--laranja-claro); border-radius: 36px; padding: 44px;
+    }
+    .futuro .selo {
+      flex: none; width: 132px; height: 132px; border-radius: 50%;
+      background: #fff; display: grid; place-items: center; text-align: center;
+      position: relative; font-weight: 800; color: var(--verde); font-size: .95rem; line-height: 1.2;
+    }
+    /* só o contorno gira; o texto fica parado para dar para ler */
+    .futuro .selo::before {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      border: 4px dashed var(--laranja); animation: gira-devagar 18s linear infinite;
+    }
+    @keyframes gira-devagar { to { transform: rotate(360deg); } }
+    .futuro h3 { font-size: 1.6rem; margin-bottom: 8px; }
+    .futuro p { color: var(--suave); }
+
+    /* ---------- equipe ---------- */
+    .equipe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+    .pessoa {
+      display: flex; align-items: center; gap: 14px; padding: 16px 18px;
+      border-radius: 20px; background: #fff; border: 2px solid var(--borda);
+      transition: transform .2s, border-color .2s;
+    }
+    .pessoa:hover { transform: translateY(-4px); border-color: var(--laranja); }
+    .pessoa .ini {
+      flex: none; width: 52px; height: 52px; border-radius: 50%;
+      display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 1.1rem;
+      background: var(--verde);
+    }
+    .pessoa:nth-child(3n+2) .ini { background: var(--laranja); }
+    .pessoa:nth-child(3n) .ini { background: var(--ods13); }
+    .pessoa b { display: block; line-height: 1.3; font-size: .98rem; }
+    .orientador { margin-top: 26px; text-align: center; color: var(--suave); }
+    .orientador b { color: var(--texto); }
+
+    /* ---------- final ---------- */
+    .final {
+      text-align: center; padding: 96px 0 72px;
+      background:
+        radial-gradient(circle at 8% 80%, var(--laranja-claro) 0 110px, transparent 111px),
+        radial-gradient(circle at 95% 25%, #fef9c3 0 90px, transparent 91px),
+        var(--verde-bem-claro);
+    }
+    .final h2 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; margin-bottom: 16px; }
+    .final .sub { margin: 0 auto 40px; }
+    .rodape { padding: 26px 0; text-align: center; font-size: .85rem; color: var(--suave); }
+    .rodape img { height: 40px; display: block; margin: 0 auto 8px; }
+
+    /* aparece ao rolar */
+    .surge { opacity: 0; transform: translateY(28px); transition: opacity .7s, transform .7s; }
+    .surge.visivel { opacity: 1; transform: none; }
+
+    @media (max-width: 860px) {
+      section { padding: 64px 0; }
+      .duas-col { grid-template-columns: 1fr; gap: 36px; }
+      .passos, .ods { grid-template-columns: 1fr; }
+      .numeros { grid-template-columns: repeat(2, 1fr); }
+      .equipe { grid-template-columns: 1fr 1fr; }
+      .futuro { flex-direction: column; text-align: center; padding: 32px 24px; }
+    }
+    @media (max-width: 520px) {
+      .hero-topo img { height: 48px; }
+      .selo-upx { font-size: .72rem; }
+      .equipe { grid-template-columns: 1fr; }
+      .numeros { gap: 12px; }
+      .numero { padding: 22px 12px; }
+      .cta { padding: 18px 28px; font-size: 1.1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .surge { opacity: 1; transform: none; }
+      .bike { left: 10%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================== TOPO ======================== -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-topo">
+      <img src="brand/logo-sem-slogan.svg" alt="2bike4">
+      <div class="selo-upx">Usina de Projetos Experimentais IV<br>ADS · Facens · 2026</div>
+    </div>
+
+    <div class="hero-corpo">
+      <h1>Conectando <span class="verde">pessoas</span><br>por meio do aluguel<br>de <span class="laranja">bicicletas</span></h1>
+      <p class="sub">Tem uma bike parada em casa? Alguém perto de você precisa dela hoje.
+        O 2bike4 junta as duas pontas — de pessoa para pessoa.</p>
+      <a class="cta" href="./">Ir para o app <span class="seta">→</span></a>
+      <div class="lema"><span>📍 Encontre</span><span>🤝 Alugue</span><span>🚲 Pedale</span></div>
+    </div>
+
+    <div class="rua" aria-hidden="true">
+      <svg class="bike" viewBox="0 0 120 72">
+        <g class="roda"><circle cx="24" cy="48" r="20" fill="none" stroke="#0f172a" stroke-width="4"/>
+          <path d="M24 28v40M4 48h40M10 34l28 28M38 34 10 62" stroke="#0f172a" stroke-width="1.5"/></g>
+        <g class="roda"><circle cx="96" cy="48" r="20" fill="none" stroke="#0f172a" stroke-width="4"/>
+          <path d="M96 28v40M76 48h40M82 34l28 28M110 34 82 62" stroke="#0f172a" stroke-width="1.5"/></g>
+        <path d="M24 48 44 22h40L96 48M44 22l16 26 24-26M60 48 52 12M44 12h16M84 22l-4-12h12" fill="none" stroke="#15803d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="60" cy="48" r="5" fill="#f97316"/>
+      </svg>
+    </div>
+  </div>
+  <svg class="onda" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 30C240 70 480 0 720 25s480 45 720 5v30H0z" fill="#fff"/>
+  </svg>
+</header>
+
+<!-- ======================== QUEM SOMOS / PROBLEMA ======================== -->
+<section>
+  <div class="wrap duas-col">
+    <div class="surge">
+      <span class="rotulo">Por que existimos</span>
+      <h2 class="titulo-secao">Bicicletas paradas, pessoas querendo pedalar</h2>
+      <p class="sub">Muita bike fica esquecida na garagem enquanto tanta gente procura um jeito
+        barato e limpo de se locomover. O 2bike4 conecta proprietários e locatários da mesma
+        cidade de forma simples e econômica: quem aluga economiza, quem anuncia ganha uma renda
+        extra, e a cidade ganha menos carros e menos poluição.</p>
+    </div>
+    <div class="surge">
+      <div class="bolha-numero">
+        <strong>+16%</strong>
+        <small>da população urbana brasileira já se desloca a pé ou de bicicleta todos os dias</small>
+        <span class="fonte">Fonte: IPEA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== COMO FUNCIONA ======================== -->
+<section style="padding-top: 0">
+  <div class="wrap centro">
+    <div class="surge">
+      <span class="rotulo">Como funciona</span>
+      <h2 class="titulo-secao">Três passos e você está pedalando</h2>
+      <p class="sub">Tudo pelo celular ou pelo computador, com o mapa no centro de tudo.</p>
+    </div>
+    <div class="passos" style="text-align: left">
+      <div class="passo surge">
+        <div class="icone">🗺️</div>
+        <h3><span class="num">1.</span> Encontre</h3>
+        <p>Veja no mapa as bikes disponíveis hoje perto de você, com preço da diária e avaliação de quem já alugou.</p>
+      </div>
+      <div class="passo surge">
+        <div class="icone">📅</div>
+        <h3><span class="num">2.</span> Alugue</h3>
+        <p>Escolha as datas, peça a reserva e pague pelo app assim que o dono confirmar.</p>
+      </div>
+      <div class="passo surge">
+        <div class="icone">⭐</div>
+        <h3><span class="num">3.</span> Pedale</h3>
+        <p>Retire a bike, aproveite o passeio e, na volta, avalie: a reputação deixa todo mundo mais seguro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== OBJETIVOS E ODS ======================== -->
+<section class="faixa-verde">
+  <div class="wrap centro">
+    <div class="surge">
+      <span class="rotulo">Nossa meta</span>
+      <h2 class="titulo-secao">Mobilidade limpa e economia compartilhada</h2>
+      <p class="sub">Promover o transporte ativo e dar uso aos bens ociosos — alinhado a três
+        Objetivos de Desenvolvimento Sustentável da ONU.</p>
+    </div>
+    <div class="ods" style="text-align: left">
+      <div class="ods-card surge" style="background: var(--ods11)">
+        <span class="emoji">🏙️</span>
+        <div class="n">11</div>
+        <h3>Cidades e comunidades sustentáveis</h3>
+        <p>Incentivo ao transporte ativo e menos congestionamentos.</p>
+      </div>
+      <div class="ods-card surge" style="background: var(--ods12)">
+        <span class="emoji">♻️</span>
+        <div class="n">12</div>
+        <h3>Consumo e produção responsáveis</h3>
+        <p>Uma bike compartilhada vale por várias compradas e paradas.</p>
+      </div>
+      <div class="ods-card surge" style="background: var(--ods13)">
+        <span class="emoji">🌎</span>
+        <div class="n">13</div>
+        <h3>Ação contra a mudança do clima</h3>
+        <p>Cada trajeto de bike é um trajeto a menos emitindo gases poluentes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== VALIDAÇÃO ======================== -->
+<section>
+  <div class="wrap centro">
+    <div class="surge">
+      <span class="rotulo">O que as pessoas disseram</span>
+      <h2 class="titulo-secao">Validado com quem vai usar</h2>
+      <p class="sub">Pesquisa com 20 potenciais usuários, entre donos de bike e quem quer alugar.</p>
+    </div>
+    <div class="numeros">
+      <div class="numero surge"><strong data-conta="63.6">63,6%</strong><span>não têm bicicleta, mas querem acesso de vez em quando</span></div>
+      <div class="numero surge"><strong data-conta="27.3">27,3%</strong><span>têm uma bike parada em casa</span></div>
+      <div class="numero surge"><strong data-conta="72.7">72,7%</strong><span>alugariam a sua para ter uma renda extra</span></div>
+      <div class="numero surge"><strong data-conta="100">100%</strong><span>usariam a plataforma para alugar</span></div>
+    </div>
+    <p class="nota-pesquisa surge">O que mais pesa na escolha: reputação de quem aluga, localização e segurança.</p>
+  </div>
+</section>
+
+<!-- ======================== PRÓXIMOS PASSOS ======================== -->
+<section style="padding-top: 0">
+  <div class="wrap">
+    <div class="futuro surge">
+      <div class="selo">SELO<br>REVISADA<br>✔</div>
+      <div>
+        <span class="rotulo">Próximos passos</span>
+        <h3 style="margin-top: 12px">Oficinas parceiras e selo de qualidade</h3>
+        <p>Vamos integrar oficinas credenciadas para agendar revisões técnicas e dar às bikes um
+          selo digital de revisão — mais transparência, segurança e confiança para quem aluga.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== EQUIPE ======================== -->
+<section style="padding-top: 0">
+  <div class="wrap centro">
+    <div class="surge">
+      <span class="rotulo">Quem somos</span>
+      <h2 class="titulo-secao">A equipe 4TECH</h2>
+      <p class="sub">Estudantes de Análise e Desenvolvimento de Sistemas do Centro Universitário Facens.</p>
+    </div>
+    <div class="equipe" style="text-align: left">
+      <div class="pessoa surge"><span class="ini">AH</span><b>Antônio Henrique Alves</b></div>
+      <div class="pessoa surge"><span class="ini">CO</span><b>Cláudio Otávio Bondezan de Oliveira</b></div>
+      <div class="pessoa surge"><span class="ini">GB</span><b>Gabriel Cruz Bueno</b></div>
+      <div class="pessoa surge"><span class="ini">HT</span><b>Hellen Luiza Romão Tibolla</b></div>
+      <div class="pessoa surge"><span class="ini">JP</span><b>Jonathan Ferreira Proença</b></div>
+      <div class="pessoa surge"><span class="ini">NR</span><b>Natasha da Silva Rodrigues</b></div>
+    </div>
+    <p class="orientador surge">Professor orientador: <b>Fernando Xavier</b></p>
+  </div>
+</section>
+
+<!-- ======================== FINAL ======================== -->
+<section class="final">
+  <svg class="onda" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"
+       style="position: absolute; top: 0; left: 0; transform: rotate(180deg)">
+    <path d="M0 30C240 70 480 0 720 25s480 45 720 5v30H0z" fill="#fff"/>
+  </svg>
+  <div class="wrap surge">
+    <h2>Bora pedalar? 🚲</h2>
+    <p class="sub">Explore o mapa, encontre uma bike perto de você ou anuncie a sua.</p>
+    <a class="cta" href="./">Ir para o app <span class="seta">→</span></a>
+  </div>
+</section>
+
+<footer class="rodape">
+  <img src="brand/icone-pin.svg" alt="">
+  2bike4 · Encontre · Alugue · Pedale — Usina de Projetos Experimentais IV, ADS Facens 2026
+</footer>
+
+<script>
+  // seções aparecem ao rolar; os percentuais contam do zero
+  const contar = (el) => {
+    const alvo = parseFloat(el.dataset.conta), casas = alvo % 1 ? 1 : 0, ini = performance.now();
+    const passo = (t) => {
+      const p = Math.min((t - ini) / 1200, 1), v = alvo * (1 - Math.pow(1 - p, 3));
+      el.textContent = v.toFixed(casas).replace('.', ',') + '%';
+      if (p < 1) requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+  };
+  const reduzir = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reduzir) {
+    const obs = new IntersectionObserver((itens) => itens.forEach((i) => {
+      if (!i.isIntersecting) return;
+      i.target.classList.add('visivel');
+      i.target.querySelectorAll('[data-conta]').forEach(contar);
+      obs.unobserve(i.target);
+    }), { threshold: 0.15 });
+    document.querySelectorAll('.surge').forEach((el) => obs.observe(el));
+  } else {
+    document.querySelectorAll('.surge').forEach((el) => el.classList.add('visivel'));
+  }
+</script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 
 Aluguel de bicicletas P2P. Backend em Clojure (`backend/`), frontend em ClojureScript (`frontend/`).
 
+Apresentação do projeto (landing page): `/sobre.html` no site publicado. Painel de rendimento dos donos no Power BI: ver `bi/README.md`.
+
 ## Backend
 
 Requisitos: JDK 21, Clojure CLI e a variável de ambiente `DATABASE_URL`
