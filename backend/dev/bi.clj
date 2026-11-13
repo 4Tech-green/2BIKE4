@@ -14,7 +14,25 @@
 ;; Valores em centavos (inteiros): o Power BI em português lê "10.50" como 1050.
 ;; As medidas dividem por 100 (ver bi/README.md).
 (def ^:private consultas
-  {"reservas"
+  {;; tudo numa tabela só, em português: o jeito mais simples de montar o painel
+   "rendimento"
+   "select b.id as reserva, to_char(lower(b.periodo), 'YYYY-MM') as mes,
+           lower(b.periodo) as data, u.nome as dono, l.titulo as bike,
+           initcap(l.tipo) as tipo, l.cidade, upper(b.periodo) - lower(b.periodo) as diarias,
+           case b.status when 'pending' then 'Aguardando' when 'confirmed' then 'Confirmada'
+                         when 'completed' then 'Concluída' when 'rejected' then 'Recusada'
+                         else 'Cancelada' end as situacao,
+           case when p.status = 'captured' then 'Sim' else 'Não' end as pago,
+           case when p.status = 'captured' then b.total_centavos else 0 end as receita_centavos,
+           r.nota as nota_da_bike
+      from bookings b
+      join listings l on l.id = b.listing_id
+      join users u on u.id = l.owner_id
+      left join payments p on p.booking_id = b.id
+      left join reviews r on r.booking_id = b.id and r.alvo = 'listing'
+     order by b.id"
+
+   "reservas"
    "select b.id as reserva_id, b.listing_id as bike_id, l.owner_id as dono_id,
            b.renter_id as locatario_id,
            lower(b.periodo) as inicio, upper(b.periodo) - 1 as fim,
